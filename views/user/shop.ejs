@@ -1,0 +1,263 @@
+<%- include('../partials/userPartials/userHeader') %> 
+
+	<!-- Start Banner Area -->
+	<section class="banner-area organic-breadcrumb">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1>Shop By Category page</h1>
+					<nav class="d-flex align-items-center">
+						<a href="/app.js">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="#">Shop<span class="lnr lnr-arrow-right"></span></a>
+						<a href="/shop">Shop By Category</a>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Banner Area -->
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-3 col-lg-4 col-md-5">
+				<div class="sidebar-categories">
+					<div class="head">Browse Categories</div>
+					<ul class="main-categories">
+						<li class="main-nav-list"><a href="/shop"><span
+							class="lnr lnr-arrow-right"></span>All</a></li>
+						<% for(let category of categories) { %>  
+							<% if(category.isActive === true) { %> 
+						<li class="main-nav-list"><a href="/category?category=<%=category._id%>"><span
+								 class="lnr lnr-arrow-right"></span><%= category.name %></a>
+						</li>
+						<% } %> 
+						<% } %> 
+					</ul>
+				</div>
+			</div>
+			<div class="col-xl-9 col-lg-8 col-md-7">
+				<!-- Start Filter Bar -->
+				<div class="filter-bar d-flex flex-wrap align-items-center justify-content-between">
+					<div class="sorting" id="route-select">
+						<select  id="selectprice" onchange="sort()">
+							<option value="default">Default sorting</option>
+							<option value="1">Low to high</option>
+							<option value="-1">High to Low</option>
+						</select>
+					</div>
+					<div>
+					<form action="/shop?searchProduct=searchProduct" class="form-inline my-2 my-lg-0 mr-auto" id="searchProductForm">
+						<input class="form-control mr-sm-2" type="search" placeholder="Search" name="searchProduct" aria-label="Search">
+						<button class="btn btn-warning my-2 my-sm-0" type="submit">Search</button>
+					  </form>
+					</div>
+				</div>
+
+				
+				<!-- End Filter Bar -->
+				<!-- Start Best Seller -->
+				<section class="lattest-product-area pb-40 category-list">
+					<div class="row" id="placeproduct">
+						<!-- single product -->
+
+                        <% if(locals.searchResults) { %> 
+                        
+                        <!-- single product -->
+						<% for(let result of searchResults) { %>
+							<% if(result.category.isActive === true) { %> 
+								<% if(result.isActive === true) { %>  
+						<div class="col-lg-4 col-md-6">
+							<div class="single-product">
+								<a href="/detailPage/<%=result._id%>"><img class="img-fluid" src="<%=product.images[0].url%>" alt="">
+								<div class="product-details">
+									<h6><%= result.name %> </h6>
+									<div class="price">
+										<h6>Rs.<%=result.price%></h6>
+									</div>
+									<div class="prd-bottom">
+
+										<a href="/add-to-cart/<%= result._id %>" class="social-info">
+											<span class="ti-bag"></span>
+											<p class="hover-text">add to bag</p>
+										</a>
+										<a href="#" class="social-info">
+											<span class="lnr lnr-heart"></span>
+											<p class="hover-text">Wishlist</p>
+										</a>
+										<a href="/detailPage/<%= result._id %>" class="social-info">
+											<span class="lnr lnr-move"></span>
+											<p class="hover-text">view more</p>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<% } %> 
+						<% } %>
+						<% } %> 
+                        <% } %>  
+
+						<% if(locals.products) { %> 
+                        
+							<!-- single product -->
+							<% for(let product of products) { %>
+								<% if(product.category.isActive === true) { %> 
+									<% if(product.isActive === true) { %>  
+							<div class="col-lg-4 col-md-6">
+								<div class="single-product">
+									<a href="/detailPage/<%=product._id%>"><img class="img-fluid" src="<%=product.images[0].url%>" alt="">
+									<div class="product-details">
+										<h6><%= product.name %> </h6>
+										<div class="price">
+											<h6>Rs.<%=product.price%></h6>
+										</div>
+										<div class="prd-bottom">
+	
+											<a onclick="addToCart('<%=product._id%>')" class="social-info">
+												<span class="ti-bag"></span>
+												<p class="hover-text">add to bag</p>
+											</a>
+											<a onclick="addToWishlist('<%=product._id%>')" class="social-info">
+												<span class="lnr lnr-heart"></span>
+												<p class="hover-text">Wishlist</p>
+											</a>
+											<a href="/detailPage/<%= product._id %>" class="social-info">
+												<span class="lnr lnr-move"></span>
+												<p class="hover-text">view more</p>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<% } %> 
+							<% } %>
+							<% } %> 
+							<% } %>  
+					</div>
+				</section>
+
+				<% if(products != "") { %> 
+				<nav aria-label="Page navigation example">
+					<ul class="pagination justify-content-end">
+						<% for(i=1;i<=pages;i++) { %> 
+							<% if(i == pageNum) { %> 
+					  <li class="page-item active"><a class="page-link" href="/shop?page=<%= i %>"><%= i %></a></li>
+					  <% }else{ %> 
+						<li class="page-item"><a class="page-link" href="/shop?page=<%= i %>"><%= i %></a></li>
+					  <% } %> 
+					  <% } %> 
+					</ul>
+				  </nav>
+				<% } %> 
+
+			</div>
+		</div>
+	</div>
+
+	<script>
+
+function addToCart(productId){
+    console.log(productId);
+    $.ajax({
+        url:'/add-to-cart/'+productId,
+        method:"post",
+        success:(response)=>{
+            console.log(response);
+            if(response.status){
+                let count = $('#cart-count').html();
+				console.log(count);
+                count = parseInt(count)+1;
+                $('#cart-count').html(count);
+                swal("Product added to Cart", {icon: "success",})
+            }else if(response.existingProduct){
+				// let count = $('#cart-count').html();
+				// console.log(count);
+                // count = parseInt(count)+1;
+                // $('#cart-count').html(count);
+				swal('Product already exists in cart')
+			}else{
+                swal("You need to login first for adding product to cart", {
+                    buttons: {cancel: "Cancel", catch: {text: "Login", value: "catch"}},}).then((value) => 
+                    {
+                        switch (value) {
+                            case "catch":window.location = "/login"
+                            break;
+                        }
+                    });
+                }
+            }
+        })
+    }
+
+		function addToWishlist(productId){
+			console.log(productId);
+			$.ajax({
+				url:'/add-to-wishlist/'+productId,
+				method:"post",
+				success:(response)=>{
+					console.log(response);
+					if(response.status){
+						swal("Product added to wishlist", {icon: "success",})
+					}else if(response.existingProduct){
+						swal('Product already exists in wishlist')
+					}else{
+						swal("You need to login first for adding product to wishlist", {
+                    buttons: {cancel: "Cancel", catch: {text: "Login", value: "catch"}},}).then((value) => 
+                    {
+                        switch (value) {
+                            case "catch":window.location = "/login"
+                            break;
+                        }
+                    });
+						}
+					}
+				})
+			}
+	
+		function sort(){
+			let selectId = document.getElementById('selectprice').value;
+			let placeProduct = document.getElementById('placeproduct');
+			let divs = '';
+			console.log(selectId);
+			$.ajax({
+				url:'/allSorting',
+				data:{
+					selectId,
+				},
+				method:'post',
+				success:(response)=>{
+					for(let product of response.sortedProducts){
+						console.log(product)
+						divs += `<div class="col-lg-4 col-md-6">
+							<div class="single-product">
+								<a href="/detailPage/${product._id}"><img class="img-fluid" src="${product.images[0].url}" alt="">
+								<div class="product-details">
+									<h6>${product.name} </h6>
+									<div class="price">
+										<h6>Rs.${product.price}</h6>
+									</div>
+									<div class="prd-bottom">
+
+										<a href="/add-to-cart/${product._id}" class="social-info">
+											<span class="ti-bag"></span>
+											<p class="hover-text">add to bag</p>
+										</a>
+										<a href="#" class="social-info">
+											<span class="lnr lnr-heart"></span>
+											<p class="hover-text">Wishlist</p>
+										</a>
+										<a href="/detailPage/${product._id}" class="social-info">
+											<span class="lnr lnr-move"></span>
+											<p class="hover-text">view more</p>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>` 
+					}
+					placeProduct.innerHTML = divs;
+				}
+			})
+		}
+	</script>>
+	
+	<%- include('../partials/userPartials/userFooter') %> 

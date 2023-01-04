@@ -1,0 +1,246 @@
+<%- include('../partials/userPartials/userHeader') %>
+
+<!-- start banner Area -->
+<section class="banner-area">
+  <div class="container">
+    <div class="row fullscreen align-items-center justify-content-start">
+      <div class="col-lg-12">
+        <div class="active-banner-slider owl-carousel">
+          <!-- single-slide -->
+          <div class="row single-slide align-items-center d-flex">
+            <div class="col-lg-5 col-md-6">
+              <div class="banner-content">
+                <h1>Nike New <br />Collection!</h1>
+                <p>
+                  Introducing our new collection of shoes, featuring trendy and
+                  comfortable styles perfect for any occasion. Shop now and step
+                  up your shoe game!
+                </p>
+                <br />
+                <p>
+                  "Don't miss out: Get <%=coupon[0].discountPrice%>% off on your
+                  first purchase with coupon code <%=coupon[0].couponCodeName%>
+                  on orders over Rs. <%=coupon[0].minimumLimit%> and under Rs.
+                  <%=coupon[0].maximumLimit%>)"
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-7">
+              <div class="banner-img">
+                <img class="img-fluid" src="img/banner/banner-img.png" alt="" />
+              </div>
+            </div>
+          </div>
+          <!-- single-slide -->
+          <div class="row single-slide align-items-center d-flex">
+            <div class="col-lg-5 col-md-6">
+              <div class="banner-content">
+                <h1>Nike New <br />Collection!</h1>
+                <p>
+                  Introducing our new collection of shoes, featuring trendy and
+                  comfortable styles perfect for any occasion. Shop now and step
+                  up your shoe game!
+                </p>
+                <br />
+                <p>
+                  "Don't miss out: Get <%=coupon[0].discountPrice%>% off on your
+                  first purchase with coupon code <%=coupon[0].couponCodeName%>
+                  on orders over Rs. <%=coupon[0].minimumLimit%> and under Rs.
+                  <%=coupon[0].maximumLimit%>"
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-7">
+              <div class="banner-img">
+                <img class="img-fluid" src="img/banner/banner-img.png" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End banner Area -->
+
+<!-- start features Area -->
+<section class="features-area section_gap">
+  <div class="container">
+    <div class="row features-inner">
+      <!-- single features -->
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="single-features">
+          <div class="f-icon">
+            <img src="img/features/f-icon1.png" alt="" />
+          </div>
+          <h6>Free Delivery</h6>
+          <p>Free Shipping on all order</p>
+        </div>
+      </div>
+      <!-- single features -->
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="single-features">
+          <div class="f-icon">
+            <img src="img/features/f-icon2.png" alt="" />
+          </div>
+          <h6>Return Policy</h6>
+          <p>Free Shipping on all order</p>
+        </div>
+      </div>
+      <!-- single features -->
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="single-features">
+          <div class="f-icon">
+            <img src="img/features/f-icon3.png" alt="" />
+          </div>
+          <h6>24/7 Support</h6>
+          <p>Free Shipping on all order</p>
+        </div>
+      </div>
+      <!-- single features -->
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="single-features">
+          <div class="f-icon">
+            <img src="img/features/f-icon4.png" alt="" />
+          </div>
+          <h6>Secure Payment</h6>
+          <p>Free Shipping on all order</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- end features Area -->
+
+<!-- start product Area -->
+<section class="owl-carousel active-product-area section_gap">
+  <!-- single product slide -->
+  <div class="single-product-slider">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-6 text-center">
+          <div class="section-title">
+            <h1>Featured Products</h1>
+            <p>
+              Looking for the perfect pair of shoes? Look no further! Our
+              ecommerce store has a wide selection of shoes for every occasion
+              and style.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <!-- single product -->
+
+        <% for(let product of allProducts) { %> <% if(product.category.isActive
+        === true) { %> <% if(product.isActive === true) { %>
+        <div class="col-lg-3 col-md-6 p-3">
+          <div class="single-product">
+            <a href="/detailPage/<%=product._id%>"
+              ><img
+                class="img-fluid img-responsive"
+                src="<%=product.images[0].url%>"
+                alt=""
+            /></a>
+            <div class="product-details">
+              <h6><%= product.name %></h6>
+              <h6><%=product.category.name%></h6>
+              <div class="price">
+                <h6>Rs.<%= product.price%></h6>
+                <!-- <h6 class="l-through">$210.00</h6> -->
+              </div>
+              <div class="prd-bottom">
+                <a onclick="addToCart('<%=product._id%>')" class="social-info">
+                  <span class="ti-bag"></span>
+                  <p class="hover-text">Add to Bag</p>
+                </a>
+                <a
+                  onclick="addToWishlist('<%=product._id%>')"
+                  class="social-info"
+                >
+                  <span class="lnr lnr-heart"></span>
+                  <p class="hover-text">Wishlist</p>
+                </a>
+                <a href="/detailPage/<%=product._id%>" class="social-info">
+                  <span class="lnr lnr-move"></span>
+                  <p class="hover-text">view more</p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% } %> <% } %> <% } %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function addToCart(productId) {
+    console.log(productId);
+    $.ajax({
+      url: "/add-to-cart/" + productId,
+      method: "post",
+      success: (response) => {
+        console.log(response);
+        if (response.status) {
+          let count = $("#cart-count").html();
+          console.log(count);
+          count = parseInt(count) + 1;
+          $("#cart-count").html(count);
+          swal("Product added to Cart", { icon: "success" });
+        } else if (response.existingProduct) {
+          // let count = $('#cart-count').html();
+          // console.log(count);
+          // count = parseInt(count)+1;
+          // $('#cart-count').html(count);
+          swal("Product already exists in cart");
+        } else {
+          swal("You need to login first for adding product to cart", {
+            buttons: {
+              cancel: "Cancel",
+              catch: { text: "Login", value: "catch" },
+            },
+          }).then((value) => {
+            switch (value) {
+              case "catch":
+                window.location = "/login";
+                break;
+            }
+          });
+        }
+      },
+    });
+  }
+
+  function addToWishlist(productId) {
+    console.log(productId);
+    $.ajax({
+      url: "/add-to-wishlist/" + productId,
+      method: "post",
+      success: (response) => {
+        console.log(response);
+        if (response.status) {
+          swal("Product added to wishlist", { icon: "success" });
+        } else if (response.existingProduct) {
+          swal("Product already exists in wishlist");
+        } else {
+          swal("You need to login first for adding product to wishlist", {
+            buttons: {
+              cancel: "Cancel",
+              catch: { text: "Login", value: "catch" },
+            },
+          }).then((value) => {
+            switch (value) {
+              case "catch":
+                window.location = "/login";
+                break;
+            }
+          });
+        }
+      },
+    });
+  }
+</script>
+
+<%- include('../partials/userPartials/userFooter') %>

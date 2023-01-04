@@ -1,0 +1,221 @@
+<%- include('../partials/adminPartials/adminPartial.ejs') %>
+<body>
+  <div class="container-fluid">
+    <div class="row flex-nowrap">
+      <div
+        class="col-auto col-md-3 col-xl-2 px-sm-2 px-0"
+        style="background-color: #343a40"
+      >
+        <div
+          class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100"
+        >
+          <a
+            href="/admin/"
+            class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+          >
+            <span class="fs-5 d-none d-sm-inline">Admin</span>
+          </a>
+          <ul
+            class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+            id="menu"
+          >
+            <li class="nav-item">
+              <a href="/admin/adminDashboard" class="nav-link align-middle px-0">
+                <img
+                  src="/img/admin/dashboard.svg"
+                  alt=""
+                  style="width: 1rem"
+                /><span class="ms-1 d-none d-sm-inline">Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a href="/admin/orders" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/orders.svg"
+                  alt=""
+                  style="width: 1rem"
+                /><span class="ms-1 d-none d-sm-inline">Orders</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/products" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/products.svg"
+                  alt=""
+                  style="width: 1rem"
+                /><span class="ms-1 d-none d-sm-inline">Products</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/addProducts" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/add products.svg"
+                  alt=""
+                  style="width: 1rem"
+                />
+                <span class="ms-1 d-none d-sm-inline">Add Products</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/categories" class="nav-link px-0 align-middle">
+                <img src="/img/admin/category.svg" alt="" style="width: 1rem" />
+                <span class="ms-1 d-none d-sm-inline">Categories</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/addcategory" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/add category.svg"
+                  alt=""
+                  style="width: 1rem"
+                />
+                <span class="ms-1 d-none d-sm-inline">Add Category</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/coupons" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/coupon.svg"
+                  alt=""
+                  style="width: 1rem"
+                />
+                <span class="ms-1 d-none d-sm-inline">Coupons</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/addCoupon" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/addCoupon.svg"
+                  alt=""
+                  style="width: 1rem"
+                />
+                <span class="ms-1 d-none d-sm-inline">Add Coupon</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/userDetails" class="nav-link px-0 align-middle">
+                <img src="/img/admin/users.svg" alt="" style="width: 1rem" />
+                <span class="ms-1 d-none d-sm-inline">Users</span>
+              </a>
+            </li>
+            <li>
+              <a href="/admin/logout" class="nav-link px-0 align-middle">
+                <img src="/img/admin/exit.svg" alt="" style="width: 1rem" />
+                <span class="ms-1 d-none d-sm-inline">Logout</span>
+              </a>
+            </li>
+          </ul>
+          <hr />
+        </div>
+      </div>
+      <div class="col py-3">
+        <div class="container">
+          <h1>Order Details</h1>
+          <div class="table-responsive" style="font-size: 14px">
+            <table
+              class="table table-bordered table-hover align-middle mb-0"
+              id="table"
+            >
+              <thead class="thead-dark">
+                <tr>
+                  <th class="col-3 col-md-3 col-lg-3 col-xl-1 text-center">
+                    ORDER&nbsp;ID
+                  </th>
+                  <th class="col-3 col-md-3 col-lg-3 col-xl-1 text-center">
+                    USER&nbsp;NAME
+                  </th>
+                  <th class="col-3 col-md-3 col-lg-3 col-xl-1 text-center">
+                    PAYMENT&nbsp;METHOD
+                  </th>
+                  <th class="col-3 col-md-3 col-lg-3 col-xl-1 text-center">
+                    PAYMENT&nbsp;STATUS
+                  </th>
+                  <th class="col-3 col-md-3 col-lg-3 col-xl-1 text-center">
+                    ORDER STATUS
+                  </th>
+                  <th class="col-3 col-md-3 col-lg-3 col-xl-1 text-center">
+                    ORDER DATE
+                  </th>
+                  <th class="col-3 col-md-3 col-lg-3 col-xl-1 text-center">
+                    Edit
+                  </th>
+                  <th class="col-3 col-md-3 col-lg-3 col-xl-1 text-center">
+                    VIEW&nbsp;PRODUCT
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <% for(let order of orders) { %>
+                <tr>
+                  <td class="col-3 col-md-3 col-lg-3 col-xl-1 text-center">
+                    <%= order._id %>
+                  </td>
+                  <td class="col-3 col-md-3 col-lg-3 col-xl-2 text-center">
+                    <%= order.username %>
+                  </td>
+                  <td class="col-3 col-md-3 col-lg-3 col-xl-2 text-center">
+                    <%= order.payment_method %>
+                  </td>
+                  <% if(order.payment_status == "Not Paid") { %>
+                  <td class="col-3 col-md-3 col-lg-3 col-xl-2 text-center text-danger">
+                    <%= order.payment_status %>
+                  </td>
+                  <% }else if(order.payment_status == "Paid"){ %>
+                  <td class="col-3 col-md-3 col-lg-3 col-xl-2 text-center text-success">
+                    <%= order.payment_status %>
+                  </td>
+                  <% }else if(order.payment_status == "Refund"){ %>
+                    <td class="col-3 col-md-3 col-lg-3 col-xl-2 text-center text-primary">
+                      <%= order.payment_status %>
+                    </td>
+                    <% } %>
+                  <% if(order.order_status == "Pending") { %> 
+                  <td class="col-3 col-md-3 col-lg-3 col-xl-2 text-center text-warning">
+                    <%= order.order_status %>
+                  </td>
+                  <% }else if(order.order_status == "Shipped"){ %> 
+                    <td class="col-3 col-md-3 col-lg-3 col-xl-2 text-center text-primary">
+                      <%= order.order_status %>
+                    </td>
+                  <% }else if(order.order_status == "Delivered"){ %> 
+                    <td class="col-3 col-md-3 col-lg-3 col-xl-2 text-center text-success">
+                      <%= order.order_status %>
+                    </td>
+                    <% }else if(order.order_status == "Cancelled"){ %> 
+                      <td class="col-3 col-md-3 col-lg-3 col-xl-2 text-center text-danger">
+                        <%= order.order_status %>
+                      </td>
+                      <% } %> 
+                      <td class="col-3 col-md-3 col-lg-3 col-xl-2 text-center">
+                        <%= order.orderDate %>
+                      </td>
+                  <td class="col-3 col-md-3 col-lg-3 col-xl-2 text-center">
+                    <a href="/admin/editOrder/<%=order._id%>"
+                      ><button type="submit" class="btn btn-primary">
+                        Edit
+                      </button></a
+                    >
+                  </td>
+                  <td class="col-3 col-md-3 col-lg-3 col-xl-2 text-center">
+                    <a href="/admin/admin-view-order-products/<%=order._id%>">
+                      <button type="submit" class="btn btn-dark">
+                        View&nbsp;Product
+                      </button>
+                    </a>
+                  </td>
+                </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      $("#table").DataTable();
+    });
+  </script>
+</body>

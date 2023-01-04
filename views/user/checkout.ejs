@@ -1,0 +1,309 @@
+<%- include('../partials/userPartials/userHeader') %>
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+  <div class="container">
+    <div
+      class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end"
+    >
+      <div class="col-first">
+        <h1>Checkout</h1>
+        <nav class="d-flex align-items-center">
+          <a href="/">Home<span class="lnr lnr-arrow-right"></span></a>
+          <a href="single-product.html">Checkout</a>
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Banner Area -->
+
+<!--================Checkout Area =================-->
+<section class="checkout_area section_gap">
+  <div class="container">
+    <form class="row contact_form" id="checkout-form">
+    <div class="cupon_area">
+      <input type="text" id="coupon" name='coupon' placeholder="Enter coupon code" />
+      <a class="tp_btn" onclick="coupon('<%=user%>','<%= totalSum %>')">Apply Coupon</a>
+    </div>
+    <div class="billing_details">
+      <div class="row">
+          <div class="col-lg-8">
+            <h3>Address</h3>
+            <% if(addresses != "") { %>
+            <div class="container pl-4 pt-4" style="border: 1px solid #cecece">
+              <% addresses.forEach((address,index)=>{ %>
+              <div class="address pb-5">
+                <div class="row pt-4 ml-2">
+                  <div>
+                    <span
+                      ><input
+                        type="radio"
+                        name="address"
+                        id="address"
+                        value="<%=address._id%>"
+                        <%= index === 0 ? 'checked' : '' %>>
+                    </span>
+                    <label for="address" class="font-weight-bold"
+                      >Address <%= index+1 %></label
+                    >
+                  </div>
+                  <!-- Need to add theme, buttons -->
+                  <div class="col-xs-12">
+                    <%= address?.houseName %><br />
+                    <%= address?.area %><br />
+                    <%= address?.landmark %><br />
+                    <%= address?.city %><br />
+                    <%= address?.state %><br />
+                    <%= address?.country %><br />
+                    <%= address?.pincode %><br />
+                  </div>
+                </div>
+              </div>
+              <% }) %>
+            </div>
+            <% } else { %>
+            <h3>There are no addresses!! Please Add a new address.</h3>
+            <% } %>
+            <div class="mt-3">
+              <a href="/addAddressCheckout"
+                ><button class="btn btn-primary profile-button" type="button">
+                  Add Address
+                </button></a
+              >
+            </div>
+
+            <input type="text" id="" name="userId" value="<%=user%>"  hidden/>
+            <input type="text" id="" name="username" value="<%=username%>"  hidden/>
+            <input type="text" id="" name="payment_status" value="Not Paid" hidden />
+          </div>
+          <div class="col-lg-4">
+            <div class="order_box">
+              <h2>Your Order</h2>
+              <ul class="list">
+                <li>
+                  <a href="#">Product <span>Price</span></a>
+                </li>
+                <% for(product of cartProducts) { %>
+                <li>
+                  <a href="#"
+                    ><%= product.product.name %>
+                    <span class="last"
+                      >Rs. <%= product.product.price %></span
+                    ></a
+                  >
+                </li>
+                <% } %>
+              </ul>
+              <ul class="list list_2">
+                <li>
+                  <a href="#">Total <span id="total"><%= totalSum %> </span></a>
+                </li>
+              </ul>
+              <br />
+              <div class="creat_account"><h4>Payment Method</h4></div>
+              <div class="payment_item">
+                <div class="radion_btn">
+                  <input
+                    type="radio"
+                    id="f-option5"
+                    name="payment_method"
+                    value="COD"
+                    checked
+                  />
+                  <label for="f-option5">COD</label>
+                  <div class="check"></div>
+                </div>
+              </div>
+              <div class="payment_item active">
+                <div class="radion_btn">
+                  <input
+                    type="radio"
+                    id="f-option6"
+                    name="payment_method"
+                    value="Online"
+                  />
+                  <label for="f-option6">Online payment</label>
+                  <img src="img/product/card.jpg" alt="" />
+                  <div class="check"></div>
+                </div>
+              </div>
+              <div class="payment_item">
+                <div class="creat_account">
+                  <input type="checkbox" id="f-option4" name="selector" />
+                  <label for="f-option4">I've read and accept the </label>
+                  <a href="#">terms & conditions*</a>
+                </div>
+                <button class="primary-btn w-100" type="submit" href="">
+                  Proceed to Payment
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<!--================End Checkout Area =================-->
+
+<script>
+  function coupon(userId,totalSum){
+    let coupon = document.getElementById("coupon").value;
+    console.log(userId,coupon);
+    $.ajax({
+      url:"/coupon",
+      method:"post",
+      data:{
+        userId,
+        totalSum,
+        coupon
+      },
+      success:(response)=>{
+        if(response.status){
+          swal({
+        title: "Coupon Applied Successfully",
+        text: "Congratulations! Your coupon has been applied successfully and your discount has been applied to your order.",
+        icon: "success",
+        button: "Okay"
+      }).then(()=>{
+            document.getElementById('total').innerHTML = response.totalSum;
+          })
+        }else if(response.couponExpired){
+          swal({
+        title: "Expired Coupon",
+        text: "Sorry, but the coupon you are trying to use has expired. Please try again later.",
+        icon: "error",
+        button: "Okay"
+      }).then(function() {
+        // Reload the page
+        location.reload();
+      });
+        }else if(response.minimumLimit){
+          swal({
+        title: "Minimum Order Not Met",
+        text: "It looks like you have not met the minimum order amount necessary to use this coupon. Please add more items to your order and try again.",
+        icon: "error",
+        button: "Okay"
+      }).then(function() {
+        // Reload the page
+        location.reload();
+      });
+        }else if(response.maximumLimit){
+          swal({
+        title: "Maximum Order Exceeded",
+        text: "Sorry, but your order exceeds the maximum amount allowed for this coupon. Please reduce the number of items in your order to qualify for the discount.",
+        icon: "error",
+        button: "Okay"
+      }).then(function() {
+        // Reload the page
+        location.reload();
+      });
+        }else if(response.existingUser){
+          swal({
+        title: "Coupon Already Used",
+        text: "Sorry, but you have already used this coupon. You can only use a coupon once per order.",
+        icon: "error",
+        button: "Okay"
+      }).then(function() {
+        // Reload the page
+        location.reload();
+      });
+        }else{
+          swal({
+        title: "Invalid Coupon Code",
+        text: "Sorry, but the coupon code you have entered is invalid. Please check the coupon code and try again.",
+        icon: "error",
+        button: "Okay"
+      }).then(function() {
+        // Reload the page
+        location.reload();
+      });
+        }
+      }
+    })
+  }
+
+  $("#checkout-form").submit((event) => {
+    event.preventDefault();
+    $.ajax({
+      url: "/checkout",
+      method: "post",
+      data: $("#checkout-form").serialize(),
+      success: (response) => {
+        if (response.status) {
+          location.href = "/confirmation";
+        }else if(response.noAddress){
+          swal("Please add a new Address!", {icon: "error",}).then(()=>{
+            location.reload();
+          })
+        } else {
+          razorpayPayment(response.order);
+        }
+      },
+    });
+  });
+
+  function razorpayPayment(order) {
+    var options = {
+      key: "rzp_test_tN9rva6tbuI8ng", // Enter the Key ID generated from the Dashboard
+      amount: order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      currency: "INR",
+      name: "Karma Shoes",
+      description: "Test Transaction",
+      // image: "https://example.com/your_logo",
+      order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      handler: function (response) {
+        // alert(response.razorpay_payment_id);
+        // alert(response.razorpay_order_id);
+        // alert(response.razorpay_signature);
+        veryfyPayment(response,order)
+      },
+      prefill: {
+        name: "Karma Shoes",
+        email: "karmashoes@gmail.com",
+        contact: "9999999999",
+      },
+      notes: {
+        address: "Razorpay Corporate Office",
+      },
+      theme: {
+        color: "#ffba00",
+      },
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.on('payment.failed', function (response){
+        // alert(response.error.code);
+        // alert(response.error.description);
+        // alert(response.error.source);
+        // alert(response.error.step);
+        // alert(response.error.reason);
+        // alert(response.error.metadata.order_id);
+        // alert(response.error.metadata.payment_id);
+        location.href = "/payment-failed";
+});
+    rzp1.open();
+  }
+
+  function veryfyPayment(payment,order){
+    $.ajax({
+      url:'/verifyPayment',
+      data:{
+        payment,
+        order
+      },
+      method:'post',
+      success:(response)=>{
+        if(response.status){
+          location.href = "/confirmation";
+        }else{
+          location.href = "/payment-failed";
+        }
+      }
+    })
+  }
+
+</script>
+
+<%- include('../partials/userPartials/userFooter') %>
+

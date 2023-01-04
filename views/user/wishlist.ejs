@@ -1,0 +1,135 @@
+<%- include('../partials/userPartials/userHeader') %>
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+  <div class="container">
+    <div
+      class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end"
+    >
+      <div class="col-first">
+        <h1>Wishlist</h1>
+        <nav class="d-flex align-items-center">
+          <a href="/">Home<span class="lnr lnr-arrow-right"></span></a>
+          <a href="/wishlist">Wishlist</a>
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Banner Area -->
+
+<!--================Cart Area =================-->
+<section class="cart_area">
+  <div class="container">
+    <div class="cart_inner">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Product</th>
+              <th scope="col">Price</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+              <!-- <th scope="col">Total</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <% for(let product of wishlistProducts) { %>
+            <tr>
+              <td>
+                <div class="media">
+                  <div class="d-flex">
+                    <img
+                      style="width: 10rem; height: auto"
+                      src="<%=product.product.images[0].url%>"
+                      alt=""
+                    />
+                  </div>
+                  <div class="media-body">
+                    <p><%=product.product.name%></p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <h5>Rs.<%=product.product.price%></h5>
+              </td>
+
+              <td>
+                <button onclick="addToCart('<%=product.product._id%>')" type="button" class="btn btn-primary">Add to cart</button>
+
+          </td>
+
+              <td>
+                <button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Remover"
+                onclick="wishlistProductRemove('<%=product._id%>','<%=product.product._id%>',-1)"><i class="fa fa-trash"></i></button>
+              </td>
+            </tr>
+            <% } %>
+           
+            
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+
+function addToCart(productId){
+    console.log(productId);
+    $.ajax({
+        url:'/add-to-cart/'+productId,
+        method:"post",
+        success:(response)=>{
+            console.log(response);
+            if(response.status){
+                let count = $('#cart-count').html();
+				console.log(count);
+                count = parseInt(count)+1;
+                $('#cart-count').html(count);
+                swal("Product added to Cart", {icon: "success",})
+            }else if(response.existingProduct){
+				// let count = $('#cart-count').html();
+				// console.log(count);
+                // count = parseInt(count)+1;
+                // $('#cart-count').html(count);
+				swal('Product already exists in cart')
+			}else{
+                swal("You need to login first for adding product to cart", {
+                    buttons: {cancel: "Cancel", catch: {text: "Login", value: "catch"}},}).then((value) => 
+                    {
+                        switch (value) {
+                            case "catch":window.location = "/login"
+                            break;
+                        }
+                    });
+                }
+            }
+        })
+    }
+
+
+  function wishlistProductRemove(cartId,productId,count){
+    count = parseInt(count);
+    $.ajax({
+      url: "/wishlist-product-remove",
+      data: {
+        cartId: cartId,
+        productId: productId,
+        count: count,
+      },
+      method:"post",
+      success: (response) => {
+        swal("Product removed from wishlist", {icon: "error",}).then(() => {
+            location.reload()
+          });
+      },
+    });
+  }
+</script>
+
+<!--================End Cart Area =================-->
+
+<%- include('../partials/userPartials/userFooter') %>

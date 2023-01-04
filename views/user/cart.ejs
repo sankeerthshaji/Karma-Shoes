@@ -1,0 +1,186 @@
+<%- include('../partials/userPartials/userHeader') %>
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+  <div class="container">
+    <div
+      class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end"
+    >
+      <div class="col-first">
+        <h1>Shopping Cart</h1>
+        <nav class="d-flex align-items-center">
+          <a href="/">Home<span class="lnr lnr-arrow-right"></span></a>
+          <a href="/cart">Cart</a>
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Banner Area -->
+
+<!--================Cart Area =================-->
+<section class="cart_area">
+  <div class="container">
+    <div class="cart_inner">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Product</th>
+              <th scope="col">Price</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Remove</th>
+              <!-- <th scope="col">Total</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <% for(let product of cartProducts) { %>
+            <tr>
+              <td>
+                <div class="media">
+                  <div class="d-flex">
+                    <img
+                      style="width: 10rem; height: auto"
+                      src="<%=product.product.images[0].url%>"
+                      alt=""
+                    />
+                  </div>
+                  <div class="media-body">
+                    <p><%=product.product.name%></p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <h5>Rs.<%=product.product.price%></h5>
+              </td>
+
+              <td>
+                <div class="product_count">
+                  <input
+                    type="number"
+                    name="quantity"
+                    id="<%=product.product._id%>"
+                    value="<%=product.quantity %>"
+                    readonly
+                  />
+                  <button
+                    onclick="changeQuantity('<%=product._id%>','<%=product.product._id%>','<%=product.userId%>',1)"
+                    class="increase items-count"
+                    type="button"
+                  >
+                    <i class="lnr lnr-chevron-up"></i>
+                  </button>
+                  <button
+                    onclick="changeQuantity('<%=product._id%>','<%=product.product._id%>','<%=product.userId%>',-1)"
+                    class="reduced items-count"
+                    type="button"
+                  >
+                    <i class="lnr lnr-chevron-down"></i>
+                  </button>
+                </div>
+              </td>
+
+              <td>
+                <button
+                  class="btn btn-danger btn-sm rounded-0"
+                  type="button"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Remover"
+                  onclick="productRemove('<%=product._id%>','<%=product.product._id%>',-1)"
+                >
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+            <% } %>
+
+            <tr class="bottom_button">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td>
+                <h5>Subtotal</h5>
+              </td>
+              <td>
+                <h5>Rs. <span id="total"><%=totalSum%></span></h5>
+              </td>
+            </tr>
+
+            <tr class="out_button_area">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>
+                <div class="checkout_btn_inner d-flex align-items-center">
+                  <a class="gray_btn" href="/shop">Continue Shopping</a>
+                  <a class="primary-btn" href="/checkout"
+                    >Proceed to checkout</a
+                  >
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function changeQuantity(cartId, productId, userId, count) {
+    let quantity = parseInt(document.getElementById(productId).value);
+    count = parseInt(count);
+    $.ajax({
+      url: "/change-product-quantity",
+      data: {
+        cartId: cartId,
+        productId: productId,
+        userId: userId,
+        count: count,
+        quantity: quantity,
+      },
+      method: "post",
+      success: (response) => {
+        console.log(response);
+        if (response.removeProduct) {
+          swal("Oops...", "Product removed from cart!", "error").then(
+            (willDelete) => {
+              location.reload();
+            }
+          );
+        } else {
+          document.getElementById(productId).value = quantity + count;
+          document.getElementById("total").innerHTML = response.total[0].total;
+        }
+      },
+    });
+  }
+
+  function productRemove(cartId, productId, count) {
+    count = parseInt(count);
+    $.ajax({
+      url: "/product-remove",
+      data: {
+        cartId: cartId,
+        productId: productId,
+        count: count,
+      },
+      method: "post",
+      success: (response) => {
+        swal("Oops...", "Product removed from cart!", "error").then(() => {
+          location.reload();
+        });
+      },
+    });
+  }
+</script>
+
+<!--================End Cart Area =================-->
+
+<%- include('../partials/userPartials/userFooter') %>

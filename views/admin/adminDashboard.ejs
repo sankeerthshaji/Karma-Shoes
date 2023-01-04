@@ -1,0 +1,283 @@
+<%- include('../partials/adminPartials/adminPartial.ejs') %>
+<body>
+  <div class="container-fluid">
+    <div class="row flex-nowrap">
+      <div
+        class="col-auto col-md-3 col-xl-2 px-sm-2 px-0"
+        style="background-color: #343a40"
+      >
+        <div
+          class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100"
+        >
+          <a
+            href="/admin/"
+            class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+          >
+            <span class="fs-5 d-none d-sm-inline">Admin</span>
+          </a>
+          <ul
+            class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+            id="menu"
+          >
+            <li class="nav-item">
+              <a
+                href="/admin/adminDashboard"
+                class="nav-link align-middle px-0"
+              >
+                <img
+                  src="/img/admin/dashboard.svg"
+                  alt=""
+                  style="width: 1rem"
+                /><span class="ms-1 d-none d-sm-inline">Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a href="/admin/orders" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/orders.svg"
+                  alt=""
+                  style="width: 1rem"
+                /><span class="ms-1 d-none d-sm-inline">Orders</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/salesReport" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/salesReport.svg"
+                  alt=""
+                  style="width: 1rem"
+                /><span class="ms-1 d-none d-sm-inline">Sales Report</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/products" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/products.svg"
+                  alt=""
+                  style="width: 1rem"
+                /><span class="ms-1 d-none d-sm-inline">Products</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/addProducts" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/add products.svg"
+                  alt=""
+                  style="width: 1rem"
+                />
+                <span class="ms-1 d-none d-sm-inline">Add Products</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/categories" class="nav-link px-0 align-middle">
+                <img src="/img/admin/category.svg" alt="" style="width: 1rem" />
+                <span class="ms-1 d-none d-sm-inline">Categories</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/addcategory" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/add category.svg"
+                  alt=""
+                  style="width: 1rem"
+                />
+                <span class="ms-1 d-none d-sm-inline">Add Category</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/coupons" class="nav-link px-0 align-middle">
+                <img src="/img/admin/coupon.svg" alt="" style="width: 1rem" />
+                <span class="ms-1 d-none d-sm-inline">Coupons</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/addCoupon" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/addCoupon.svg"
+                  alt=""
+                  style="width: 1rem"
+                />
+                <span class="ms-1 d-none d-sm-inline">Add Coupon</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/userDetails" class="nav-link px-0 align-middle">
+                <img src="/img/admin/users.svg" alt="" style="width: 1rem" />
+                <span class="ms-1 d-none d-sm-inline">Users</span>
+              </a>
+            </li>
+            <li>
+              <a href="/admin/logout" class="nav-link px-0 align-middle">
+                <img src="/img/admin/exit.svg" alt="" style="width: 1rem" />
+                <span class="ms-1 d-none d-sm-inline">Logout</span>
+              </a>
+            </li>
+          </ul>
+          <hr />
+        </div>
+      </div>
+      <div class="col py-3">
+        <h2>Dashboard</h2>
+        <style>
+          .card-counter {
+            box-shadow: 2px 2px 10px #dadada;
+            margin: 5px;
+            padding: 20px 10px;
+            background-color: #fff;
+            height: 100px;
+            border-radius: 5px;
+            transition: 0.3s linear all;
+          }
+
+          .card-counter:hover {
+            box-shadow: 4px 4px 20px #dadada;
+            transition: 0.3s linear all;
+          }
+
+          .card-counter.primary {
+            background-color: #007bff;
+            color: #fff;
+          }
+
+          .card-counter.danger {
+            background-color: #ef5350;
+            color: #fff;
+          }
+
+          .card-counter.success {
+            background-color: #66bb6a;
+            color: #fff;
+          }
+
+          .card-counter.info {
+            background-color: #26c6da;
+            color: #fff;
+          }
+
+          .card-counter i {
+            font-size: 5em;
+            opacity: 0.2;
+          }
+
+          .card-counter .count-numbers {
+            position: absolute;
+            right: 35px;
+            top: 20px;
+            font-size: 32px;
+            display: block;
+          }
+
+          .card-counter .count-name {
+            position: absolute;
+            right: 35px;
+            top: 65px;
+            font-style: italic;
+            text-transform: capitalize;
+            opacity: 0.5;
+            display: block;
+            font-size: 18px;
+          }
+        </style>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="card-counter primary">
+                <i class="fa fa-users"></i>
+                <span class="count-numbers"><%= totalUsers %> </span>
+                <span class="count-name">Total users</span>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="card-counter danger">
+                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                <span class="count-numbers"><%= totalProducts %></span>
+                <span class="count-name">Total products</span>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="card-counter success">
+                <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                <span class="count-numbers"><%= totalOrders %></span>
+                <span class="count-name">Total orders</span>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="card-counter info">
+                <i class="fa fa-money" aria-hidden="true"></i>
+                <span class="count-numbers"><%= totalIncome %></span>
+                <span class="count-name">Total revenue</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row gap-2 justify-content-center p-2">
+          <div class="col-md-7 mt-5 gbg" style="border-radius: 5px">
+            <canvas id="ordersStatusChart" class="h-100"> </canvas>
+          </div>
+          <div class="col-md-4 mt-5 gbg" style="border-radius: 5px">
+            <canvas id="Paystatus" class=""> </canvas>
+          </div>
+        
+        <input type="hidden" id="pending" value="<%= Pending %>" />
+        <input type="hidden" id="shipped" value="<%= Shipped %>" />
+        <input type="hidden" id="delivered" value="<%= Delivered %>" />
+        <input type="hidden" id="cancelled" value="<%= Cancelled %>" />
+        <input type="hidden" id="cod" value="<%= COD %>" />
+        <input type="hidden" id="online" value="<%= Online %>" />
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+          const ctx = document.getElementById("ordersStatusChart");
+          const ctx1 = document.getElementById("Paystatus");
+          const pending = Number(document.getElementById("pending").value);
+          const shipped = Number(document.getElementById("shipped").value);
+          const delivered = Number(document.getElementById("delivered").value);
+          const cancelled = Number(document.getElementById("cancelled").value);
+          const cod = Number(document.getElementById("cod").value);
+          const online = Number(document.getElementById("online").value);
+
+          new Chart(ctx, {
+            type: "bar",
+            data: {
+              labels: ["Pending", "Shipped", "Delivered", "Cancelled"],
+              datasets: [
+                {
+                  label: "Order Status",
+                  data: [pending, shipped, delivered, cancelled],
+                  borderWidth: 2,
+                  backgroundColor: ["#f0ad4e", "#0275d8", "#5cb85c", "#d9534f"],
+                },
+              ],
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true,
+                },
+              },
+            },
+          });
+          new Chart(ctx1, {
+            type: "pie",
+            data: {
+              labels: ["COD", "Online"],
+              datasets: [
+                {
+                  label: "Payment method",
+                  data: [cod, online],
+                  borderWidth: 2,
+                  backgroundColor: ["#5cb85c", "#0275d8"],
+                },
+              ],
+            },
+            options: {},
+          });
+        </script>
+        </div>
+      </div>
+    </div>
+  </div>      
+</body>

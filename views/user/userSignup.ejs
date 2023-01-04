@@ -1,0 +1,129 @@
+<%- include('../partials/userPartials/userHeader') %> 
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Sign Up</h1>
+                <nav class="d-flex align-items-center">
+                    <!-- <a href="/">Home<span class="lnr lnr-arrow-right"></span></a> -->
+                    <a href="/signup">Please fill in this form to create an account.</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+
+<!--================Login Box Area =================-->
+<section class="login_box_area section_gap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="login_box_img">
+                    <img class="img-fluid" src="img/login.jpg" alt="">
+                    <div class="hover">
+                        <h4>Already have an account?</h4>
+                        <p>Login Now!</p>
+                        <a class="primary-btn" href="/login">Login</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="login_form_inner">
+                    <h3>Create an Account</h3>
+                    <form class="row login_form" action="/signup" method="post" id="form" onsubmit="return checkLoginForm(this);">
+                      <% if(locals.err_message) { %> 
+                        <p class="error" style="color:red"><%= err_message %> </p>
+                        <% } %> 
+                        <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'" >
+                            <span id="usernameError" style="color: red;display: flex;flex-direction: row-reverse;"></span>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" >
+                            <span id="emailError" style="color: red;display: flex;flex-direction: row-reverse;"></span>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input type="tel" class="form-control" id="mobile" name="mobile" placeholder="Mobile" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Mobile'" >
+                            <span id="mobileError" style="color: red;display: flex;flex-direction: row-reverse;"></span>
+                        </div>
+                        <div class="col-md-12 form-group" id="password-container">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" >
+                            <span id="passwordError" style="color: red;display: flex;flex-direction: row-reverse;"></span>
+                        </div>
+                        <!-- <div class="col-md-12 form-group">
+                            <div class="creat_account">
+                                <input type="checkbox" id="f-option2" name="selector">
+                                <label for="f-option2">Keep me logged in</label>
+                            </div>
+                        </div> -->
+                        <div class="col-md-12 form-group">
+                            <br><button type="submit" value="submit" class="primary-btn">Sign up</button>
+                            <!-- <a href="#">Forgot Password?</a> -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function checkLoginForm(form) {
+  let username = document.getElementById("username");
+  let email = document.getElementById("email");
+  let password = document.getElementById("password");
+  let mobile = document.getElementById("mobile");
+
+  var regex = /^[a-zA-Z\s]+$/;
+  if (username.value == "") {
+    document.getElementById("usernameError").innerHTML = "please enter your name";
+    username.focus();
+    return false;
+  }
+  if (regex.test(username.value) === false) {
+    document.getElementById("usernameError").innerHTML =
+      "name should not contain special characters";
+    username.focus();
+    return false;
+  }
+  if (email.value == "") {
+    document.getElementById("emailError").innerHTML = "please enter your email";
+    email.focus();
+    return false;
+  }
+  const re =
+    /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+  if (!re.test(email.value)) {
+    document.getElementById("EmailError").innerHTML =
+      "please enter a vaild email";
+    email.focus();
+    return false;
+  }
+  if (mobile.value == "") {
+    document.getElementById("mobileError").innerHTML =
+      "please enter your mobile number";
+    mobile.focus();
+    return false;
+  }
+  const mob = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+  if (mob.test(mobile.value) === false) {
+    document.getElementById("mobileError").innerHTML =
+      "mobile number should be 10 digits";
+    mobile.focus();
+    return false;
+  }
+  if (password.value == "") {
+    document.getElementById("passwordError").innerHTML =
+      "please enter your password";
+    password.focus();
+    return false;
+  }
+  return true;
+}
+
+</script>
+<!--================End Login Box Area =================-->
+<%- include('../partials/userPartials/userFooter') %> 

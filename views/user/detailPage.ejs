@@ -1,0 +1,195 @@
+<%- include('../partials/userPartials/userHeader') %>
+
+<style>
+	
+</style>
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+  <div class="container">
+    <div
+      class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end"
+    >
+      <div class="col-first">
+        <h1>Product Details Page</h1>
+        <nav class="d-flex align-items-center">
+          <a href="/">Home<span class="lnr lnr-arrow-right"></span></a>
+          <a href="/category">Shop<span class="lnr lnr-arrow-right"></span></a>
+          <a href="#">product-details</a>
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Banner Area -->
+
+<!--================Single Product Area =================-->
+<style>
+	
+  figure.zoom {
+    background-position: 50% 50%;
+    position: relative;
+    width: 450px;
+    overflow: hidden;
+    cursor: zoom-in;
+  }
+  figure.zoom img:hover {
+    opacity: 0;
+  }
+  figure.zoom img {
+    transition: opacity 0.5s;
+    display: block;
+    width: 100%;
+  }
+</style>
+<div class="product_image_area">
+  <div class="container">
+    <div class="row s_product_inner">
+      <div class="col-lg-6">
+        <div class="s_Product_carousel">
+          <% for(let img of product.images) { %> 
+          <div class="single-prd-item">
+            <figure
+            id="zoomer"
+            class="zoom"
+            onmousemove="zoom(event)"
+            style="
+              background-image: url(<%=img.url%>);
+              width: 400px;
+              height: 400px;
+            "
+          >
+            <img
+              id="main-image"
+              style="width: 400px; height: 400px"
+              src="<%=img.url%>"
+            />
+          </figure>
+          </div>
+          <% } %> 
+        </div>
+      </div>
+
+      <div class="col-lg-5 offset-lg-1">
+        <div class="s_product_text">
+          <h3><%= product.name %></h3>
+          <h2>Rs.<%=product.price%></h2>
+          <ul class="list">
+            <li>
+              <a class="active" href="#"
+                ><span>Category</span> : <%= product.category.name %>
+              </a>
+            </li>
+            <li>
+              <a href="#"><span>Availibility</span> : In Stock</a>
+            </li>
+          </ul>
+          <p><%= product.description %></p>
+          <div class="card_area d-flex align-items-center">
+            <a
+              class="primary-btn"
+              onclick="addToCart('<%=product._id%>')"
+              style="color: white"
+              >Add to Cart</a
+            >
+            <a class="icon_btn" onclick="addToWishlist('<%=product._id%>')"
+              ><i class="lnr lnr lnr-heart"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--================End Single Product Area =================-->
+
+<!--================Product Description Area =================-->
+<section class="product_description_area">
+  <div class="container"></div>
+</section>
+<!--================End Product Description Area =================-->
+
+<script>
+  function addToCart(productId) {
+    console.log(productId);
+    $.ajax({
+      url: "/add-to-cart/" + productId,
+      method: "post",
+      success: (response) => {
+        console.log(response);
+        if (response.status) {
+          let count = $("#cart-count").html();
+          console.log(count);
+          count = parseInt(count) + 1;
+          $("#cart-count").html(count);
+          swal("Product added to Cart", { icon: "success" });
+        } else if (response.existingProduct) {
+          // let count = $('#cart-count').html();
+          // console.log(count);
+          // count = parseInt(count)+1;
+          // $('#cart-count').html(count);
+          swal("Product already exists in cart");
+        } else {
+          swal("You need to login first for adding product to cart", {
+            buttons: {
+              cancel: "Cancel",
+              catch: { text: "Login", value: "catch" },
+            },
+          }).then((value) => {
+            switch (value) {
+              case "catch":
+                window.location = "/login";
+                break;
+            }
+          });
+        }
+      },
+    });
+  }
+
+  function addToWishlist(productId) {
+    console.log(productId);
+    $.ajax({
+      url: "/add-to-wishlist/" + productId,
+      method: "post",
+      success: (response) => {
+        console.log(response);
+        if (response.status) {
+          swal("Product added to wishlist", { icon: "success" });
+        } else if (response.existingProduct) {
+          swal("Product already exists in wishlist");
+        } else {
+          swal("You need to login first for adding product to wishlist", {
+            buttons: {
+              cancel: "Cancel",
+              catch: { text: "Login", value: "catch" },
+            },
+          }).then((value) => {
+            switch (value) {
+              case "catch":
+                window.location = "/login";
+                break;
+            }
+          });
+        }
+      },
+    });
+  }
+</script>
+
+<script>
+  function offZoom(e) {
+    img.style.transformOrigin = `center center`;
+    img.style.transform = "scale(1)";
+  }
+
+  function zoom(e) {
+    var zoomer = e.currentTarget;
+    e.offsetX ? (offsetX = e.offsetX) : (offsetX = e.touches[0].pageX);
+    e.offsetY ? (offsetY = e.offsetY) : (offsetX = e.touches[0].pageX);
+    x = (offsetX / zoomer.offsetWidth) * 100;
+    y = (offsetY / zoomer.offsetHeight) * 100;
+    zoomer.style.backgroundPosition = x + "% " + y + "%";
+  }
+</script>
+
+<%- include('../partials/userPartials/userFooter') %>

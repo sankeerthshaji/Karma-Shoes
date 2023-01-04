@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/500.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <div>
+      <span class="error-num">5</span>
+      <div class="eye"></div>
+      <div class="eye"></div>
+      <p class="sub-text">
+        Sorry, something went wrong on our end. We are currently trying to fix
+        the problem. We're <i>looking</i> to see what happened.
+      </p>
+      <a href="#" onclick="history.back()">Go back</a>
+    </div>
+
+    <script>
+      $("body").mousemove(function (event) {
+        var e = $(".eye");
+        var x = e.offset().left + e.width() / 2;
+        var y = e.offset().top + e.height() / 2;
+        var rad = Math.atan2(event.pageX - x, event.pageY - y);
+        var rot = rad * (180 / Math.PI) * -1 + 180;
+        e.css({
+          "-webkit-transform": "rotate(" + rot + "deg)",
+          transform: "rotate(" + rot + "deg)",
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,145 @@
+<%- include('../partials/adminPartials/adminPartial.ejs') %>
+<body>
+  <div class="container-fluid">
+    <div class="row flex-nowrap">
+      <div
+        class="col-auto col-md-3 col-xl-2 px-sm-2 px-0"
+        style="background-color: #343a40"
+      >
+        <div
+          class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100"
+        >
+          <a
+            href="/admin/"
+            class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+          >
+            <span class="fs-5 d-none d-sm-inline">Admin</span>
+          </a>
+          <ul
+            class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+            id="menu"
+          >
+            <li class="nav-item">
+              <a href="/admin/adminDashboard" class="nav-link align-middle px-0">
+                <img
+                  src="/img/admin/dashboard.svg"
+                  alt=""
+                  style="width: 1rem"
+                /><span class="ms-1 d-none d-sm-inline">Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a href="/admin/orders" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/orders.svg"
+                  alt=""
+                  style="width: 1rem"
+                /><span class="ms-1 d-none d-sm-inline">Orders</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/products" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/products.svg"
+                  alt=""
+                  style="width: 1rem"
+                /><span class="ms-1 d-none d-sm-inline">Products</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/addProducts" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/add products.svg"
+                  alt=""
+                  style="width: 1rem"
+                />
+                <span class="ms-1 d-none d-sm-inline">Add Products</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/Categories" class="nav-link px-0 align-middle">
+                <img src="/img/admin/category.svg" alt="" style="width: 1rem" />
+                <span class="ms-1 d-none d-sm-inline">Categories</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/addcategory" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/add category.svg"
+                  alt=""
+                  style="width: 1rem"
+                />
+                <span class="ms-1 d-none d-sm-inline">Add Category</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/coupons" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/coupon.svg"
+                  alt=""
+                  style="width: 1rem"
+                />
+                <span class="ms-1 d-none d-sm-inline">Coupons</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/addCoupon" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/addCoupon.svg"
+                  alt=""
+                  style="width: 1rem"
+                />
+                <span class="ms-1 d-none d-sm-inline">Add Coupon</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/userDetails" class="nav-link px-0 align-middle">
+                <img src="/img/admin/users.svg" alt="" style="width: 1rem" />
+                <span class="ms-1 d-none d-sm-inline">Users</span>
+              </a>
+            </li>
+            <li>
+              <a href="/admin/logout" class="nav-link px-0 align-middle">
+                <img src="/img/admin/exit.svg" alt="" style="width: 1rem" />
+                <span class="ms-1 d-none d-sm-inline">Logout</span>
+              </a>
+            </li>
+          </ul>
+          <hr />
+        </div>
+      </div>
+      <div class="col py-3">
+        <h2 class="text-center">Edit Order Details</h2>
+        <form action="/admin/orders/<%=order._id%>?_method=PUT" method="post">
+          <label for="order_status">Order Status</label>
+          <select
+            id="order_status"
+            name="order_status"
+            class="form-select"
+            aria-label="Default select example"
+          >
+            <option selected><%= order.order_status %></option>
+            <option value="Pending">Pending</option>
+            <option value="Shipped">Shipped</option>
+            <option value="Delivered">Delivered</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+
+          <label for="payment_status">Payment Status</label>
+          <select
+            id="payment_status"
+            name="payment_status"
+            class="form-select"
+            aria-label="Default select example"
+          >
+            <option selected><%= order.payment_status %></option>
+            <option value="Paid">Paid</option>
+            <option value="Not Paid">Not Paid</option>
+          </select>
+
+          <button type="submit" class="btn btn-dark mt-4">Update</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>

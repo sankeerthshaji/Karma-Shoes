@@ -1,0 +1,114 @@
+<%- include('../partials/userPartials/userHeader') %>
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+  <div class="container">
+    <div
+      class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end"
+    >
+      <div class="col-first">
+        <h1>Order Details</h1>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Banner Area -->
+
+<div class="table-responsive p-5">
+  <table class="table table-bordered table-hover align-middle mb-0 bg-white">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Order Id</th>
+        <th scope="col">Order Date</th>
+        <th scope="col">Delivery Date</th>
+        <th scope="col">Total Amount</th>
+        <th scope="col">Payment Method</th>
+        <th scope="col">Payment Status</th>
+        <th scope="col">Order Status</th>
+        <th scope="col">View Products</th> 
+        <th scope="col">Cancel Order</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% orders.forEach((order,index)=>{ %>
+      <tr>
+        <th scope="row"><%= index + 1 %></th>
+        <td><%= order._id %> </td>
+        <td><%= order.orderDate %></td>
+        <td><%= order.deliveryDate %></td>
+        <td><%= order.total %></td>
+        <td><%= order.payment_method %></td>
+        <% if(order.payment_status == "Not Paid") { %>
+          <td class="text-danger">
+            <%= order.payment_status %>
+          </td>
+          <% }else if(order.payment_status == "Paid"){ %>
+            <td class="text-success">
+              <%= order.payment_status %>
+            </td>
+            <% }else if(order.payment_status == "Refund"){ %>
+              <td class="text-primary">
+                <%= order.payment_status %>
+              </td>
+              <% } %>
+          <% if(order.order_status == "Pending") { %> 
+          <td class="text-warning">
+            <%= order.order_status %>
+          </td>
+          <% }else if(order.order_status == "Shipped"){ %> 
+            <td class="text-primary">
+              <%= order.order_status %>
+            </td>
+          <% }else if(order.order_status == "Delivered"){ %> 
+            <td class="text-success">
+              <%= order.order_status %>
+            </td>
+            <% }else if(order.order_status == "Cancelled"){ %> 
+              <td class="text-danger">
+                <%= order.order_status %>
+              </td>
+              <% } %> 
+        <td>
+          <a href="/view-order-products/<%=order._id%>"><button type="button" class="btn btn-primary">View Products</button></a>
+        </td>
+        <td>
+          <% if(order.order_status == "Cancelled") { %> 
+            <button type="button" class="btn btn-danger" disabled>Cancel</button>
+          <%} else if(order.order_status == "Delivered") { %> 
+            <button type="button" class="btn btn-danger" disabled>Cancel</button>
+          <% }else{ %> 
+            <a onclick="orderCancel('<%=order._id%>')"><button type="button" class="btn btn-danger">Cancel</button></a>
+            <% } %> 
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  function orderCancel(orderId){
+    $.ajax({
+      url:"/orderCancel",
+      method:"post",
+      data:{
+        orderId:orderId
+      },
+        success:(response)=>{
+          if(response.status){
+            swal({
+        title: "Order Cancelled",
+        text: "Your order has been cancelled. Thank you for using our service.",
+        icon: "success",
+        button: "Okay"
+      }).then(function() {
+        // Reload the page
+        location.reload();
+      });
+        }
+        }
+    })
+  }
+</script>
+
+<%- include('../partials/userPartials/userFooter') %>

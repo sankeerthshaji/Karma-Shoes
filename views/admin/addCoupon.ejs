@@ -1,0 +1,173 @@
+<%- include('../partials/adminPartials/adminPartial.ejs') %>
+<body>
+  <div class="container-fluid">
+    <div class="row flex-nowrap">
+      <div
+        class="col-auto col-md-3 col-xl-2 px-sm-2 px-0"
+        style="background-color: #343a40"
+      >
+        <div
+          class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100"
+        >
+          <a
+            href="/admin/"
+            class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+          >
+            <span class="fs-5 d-none d-sm-inline">Admin</span>
+          </a>
+          <ul
+            class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+            id="menu"
+          >
+            <li class="nav-item">
+              <a href="/admin/adminDashboard" class="nav-link align-middle px-0">
+                <img
+                  src="/img/admin/dashboard.svg"
+                  alt=""
+                  style="width: 1rem"
+                /><span class="ms-1 d-none d-sm-inline">Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a href="/admin/orders" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/orders.svg"
+                  alt=""
+                  style="width: 1rem"
+                /><span class="ms-1 d-none d-sm-inline">Orders</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/products" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/products.svg"
+                  alt=""
+                  style="width: 1rem"
+                /><span class="ms-1 d-none d-sm-inline">Products</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/addProducts" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/add products.svg"
+                  alt=""
+                  style="width: 1rem"
+                />
+                <span class="ms-1 d-none d-sm-inline">Add Products</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/Categories" class="nav-link px-0 align-middle">
+                <img src="/img/admin/category.svg" alt="" style="width: 1rem" />
+                <span class="ms-1 d-none d-sm-inline">Categories</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/addcategory" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/add category.svg"
+                  alt=""
+                  style="width: 1rem"
+                />
+                <span class="ms-1 d-none d-sm-inline">Add Category</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/coupons" class="nav-link px-0 align-middle">
+                <img src="/img/admin/coupon.svg" alt="" style="width: 1rem" />
+                <span class="ms-1 d-none d-sm-inline">Coupons</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/addCoupon" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/addCoupon.svg"
+                  alt=""
+                  style="width: 1rem"
+                />
+                <span class="ms-1 d-none d-sm-inline">Add Coupon</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/userDetails" class="nav-link px-0 align-middle">
+                <img src="/img/admin/users.svg" alt="" style="width: 1rem" />
+                <span class="ms-1 d-none d-sm-inline">Users</span>
+              </a>
+            </li>
+            <li>
+              <a href="/admin/logout" class="nav-link px-0 align-middle">
+                <img src="/img/admin/exit.svg" alt="" style="width: 1rem" />
+                <span class="ms-1 d-none d-sm-inline">Logout</span>
+              </a>
+            </li>
+          </ul>
+          <hr />
+        </div>
+      </div>
+      <div class="col py-3">
+        <section>
+          <div class="container mt-4">
+            <div class="row">
+              <div class="col-md-6">
+                <h2 class="text-center">Add Coupon</h2>
+                <form action="/admin/coupons" method="post">
+                  <% if(couponErr) { %>
+                    <p class="error" style="color: red"><%= couponErr %></p>
+                    <% } %>
+                  <label for="coupon_code">Coupon Code</label>
+                  <input
+                    type="text"
+                    name="coupon_code"
+                    id="coupon_code"
+                    class="form-control"
+                    required
+                  />
+
+                  <label for="discount_price">Discount&nbsp;(In %)</label>
+                  <input
+                    type="number"
+                    name="discount_price"
+                    id="discount_price"
+                    class="form-control"
+                    required
+                  />
+
+                  <label for="minimumLimit">Minimum Limit</label>
+                  <input
+                    type="number"
+                    name="minimumLimit"
+                    id="minimumLimit"
+                    class="form-control"
+                    required
+                  />
+
+                  <label for="maximumLimit">Maximum Limit</label>
+                  <input
+                    type="number"
+                    name="maximumLimit"
+                    id="maximumLimit"
+                    class="form-control"
+                    required
+                  />
+
+                  <label for="expiry_date">Expiry Date</label>
+                  <input
+                    type="date"
+                    name="expiry_date"
+                    id="expiry_date"
+                    class="form-control"
+                    required
+                  />
+
+                  <button type="submit" class="btn btn-dark mt-4">
+                    Submit
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</body>
