@@ -36,7 +36,6 @@ module.exports = {
             { $project: { products: { $size: "$products" } } },
           ]);
           count = count[0].products;
-          console.log(count);
         } else {
           count = 0;
         }
