@@ -208,9 +208,8 @@ module.exports = {
             { $project: { products: { $size: "$products" } } },
           ]);
           count = count[0].products;
-          console.log(count);
         } else {
-          console.log(count);
+          count=0;
         }
       }
       res.render("user/detailPage", { user, product, count, categories });
@@ -280,7 +279,6 @@ module.exports = {
         { $project: { products: { $size: "$products" } } },
       ]);
       count = count[0].products;
-      console.log(count);
       if (count == 0) {
         res.render("user/cartEmpty", { user, count, categories });
       } else {
