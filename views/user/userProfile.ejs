@@ -22,12 +22,14 @@
   <div class="row">
     <div class="col-md-3 border-right">
       <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+        <% if(userDetails[0].image.length!==0) { %> 
         <img
           class="rounded-circle mt-5"
           width="150px"
-          src="<%=userDetails?[0].image?[0].url%>"
+          src="<%=userDetails[0].image[0].url%>"
           onerror="this.src='https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg';"
         />
+        <% } %> 
         <span class="font-weight-bold"><%=userDetails[0].username%></span
         ><span class="text-black-50"><%=userDetails[0].email%></span>
         <a href="/add-image"
