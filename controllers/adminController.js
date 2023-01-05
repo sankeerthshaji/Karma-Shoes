@@ -372,7 +372,12 @@ module.exports = {
         },
       },
     ]);
-    totalIncome = totalIncome[0].total;
+    if(totalIncome.length==0){
+      totalIncome=0
+    }else{
+      totalIncome = totalIncome[0].total;
+    }
+    
     const Pending = await Order.find({ order_status: "Pending" }).count();
     const Shipped = await Order.find({ order_status: "Shipped" }).count();
     const Delivered = await Order.find({ order_status: "Delivered" }).count();
