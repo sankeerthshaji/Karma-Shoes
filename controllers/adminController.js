@@ -314,6 +314,8 @@ module.exports = {
         expiryDate: req.body.expiry_date,
       });
       await newCoupon.save();
+      const deletedCoupon = await Coupon.deleteOne({});
+      console.log(`Successfully deleted ${deletedCoupon.title}`);
       res.redirect("/admin/coupons");
     }
   },
