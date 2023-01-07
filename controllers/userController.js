@@ -594,18 +594,46 @@ module.exports = {
     try {
       const { category } = req.query;
       if (category) {
-        const categoryId = req.query.category;
+        const catId = req.query.category;
         const category = await Category.findById(
-          mongoose.Types.ObjectId(categoryId),
-          { isActive: true }
+          mongoose.Types.ObjectId(catId)
         );
-
-        var products = await Product.find({
-          $and: [{ isActive: "true" }, { category }],
-        }).populate("category");
-
-        res.json({category:true,products})
-
+        let user = req.session.user;
+        // const products = await Product.find({ category }).populate("category");
+        // console.log(products);
+        var perPage = 6;
+        var pageNum = 1;
+        var docCount = await Product.countDocuments({ category });
+        console.log(docCount);
+        var products = await Product.find({ category }).populate("category");
+        console.log(products);
+        var pages = Math.ceil(docCount / perPage);
+        console.log(pages);
+        const categories = await Category.find({ isActive: true });
+        let userId = req.session.user;
+        var count = 0;
+        if (req.session.user) {
+          var count = 0;
+          let cart = await Cart.findOne({ userId });
+          if (cart) {
+            var count = await Cart.aggregate([
+              { $match: { userId: mongoose.Types.ObjectId(userId) } },
+              { $project: { products: { $size: "$products" } } },
+            ]);
+            count = count[0].products;
+            console.log(count);
+          } else {
+            console.log(count);
+          }
+        }
+        res.render("user/shopByCategory", {
+          user,
+          products,
+          categories,
+          category,
+          count,
+          pages,
+        });
       }
     } catch (err) {
       console.error(err);
@@ -636,7 +664,7 @@ module.exports = {
     if (req.query.searchProduct) {
       const { searchProduct } = req.query;
       console.log(searchProduct);
-      const searchResults = await Product.find({                 
+      const searchResults = await Product.find({
         $and: [
           { isActive: "true" },
           {

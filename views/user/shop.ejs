@@ -26,7 +26,7 @@
 							class="lnr lnr-arrow-right"></span>All</a></li>
 						<% for(let category of categories) { %>  
 							<% if(category.isActive === true) { %> 
-						<li class="main-nav-list"><a id="category-link" href="javascript:filterProducts('<%=category._id%>','?category=<%=category._id%>')"><span
+						<li class="main-nav-list"><a id="category-link" href="/category?category=<%=category._id%>"><span
 							class="lnr lnr-arrow-right"></span><%= category.name %></a>
 						</li>
 						<% } %> 
@@ -154,50 +154,6 @@
 	</div>
 
 	<script>
-
-function filterProducts(categoryId, query) {
-  console.log(query);
-  let placeProduct = document.getElementById('placeproduct');
-  let divs = '';
-  $.ajax({
-    url: '/category' + query,
-    success: function(response) {
-		console.log(response);
-      if(response.category){
-		for(let product of response.products){
-						console.log(product)
-						divs += `<div class="col-lg-4 col-md-6">
-							<div class="single-product">
-								<a href="/detailPage/${product._id}"><img class="img-fluid" src="${product.images[0].url}" alt="">
-								<div class="product-details">
-									<h6>${product.name} </h6>
-									<div class="price">
-										<h6>Rs.${product.price}</h6>
-									</div>
-									<div class="prd-bottom">
-
-										<a href="/add-to-cart/${product._id}" class="social-info">
-											<span class="ti-bag"></span>
-											<p class="hover-text">add to bag</p>
-										</a>
-										<a href="#" class="social-info">
-											<span class="lnr lnr-heart"></span>
-											<p class="hover-text">Wishlist</p>
-										</a>
-										<a href="/detailPage/${product._id}" class="social-info">
-											<span class="lnr lnr-move"></span>
-											<p class="hover-text">view more</p>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>` 
-					}
-					placeProduct.innerHTML = divs;
-	  }
-    }
-  });
-}
 
 function addToCart(productId){
     console.log(productId);
