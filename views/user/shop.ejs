@@ -59,46 +59,6 @@
 					<div class="row" id="placeproduct">
 						<!-- single product -->
 
-                        <% if(locals.searchResults) { %> 
-                        
-                        <!-- single product -->
-						<% for(let result of searchResults) { %>
-							<% if(result.category.isActive === true) { %> 
-								<% if(result.isActive === true) { %>  
-						<div class="col-lg-4 col-md-6">
-							<div class="single-product">
-								<a href="/detailPage/<%=result._id%>"><img class="img-fluid" src="<%=product.images[0].url%>" alt="">
-								<div class="product-details">
-									<h6><%= result.name %> </h6>
-									<div class="price">
-										<h6>Rs.<%=result.price%></h6>
-									</div>
-									<div class="prd-bottom">
-
-										<a href="/add-to-cart/<%= result._id %>" class="social-info">
-											<span class="ti-bag"></span>
-											<p class="hover-text">add to bag</p>
-										</a>
-										<a href="#" class="social-info">
-											<span class="lnr lnr-heart"></span>
-											<p class="hover-text">Wishlist</p>
-										</a>
-										<a href="/detailPage/<%= result._id %>" class="social-info">
-											<span class="lnr lnr-move"></span>
-											<p class="hover-text">view more</p>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
-						<% } %> 
-						<% } %>
-						<% } %> 
-                        <% } %>  
-
-						<% if(locals.products) { %> 
-                        
-							<!-- single product -->
 							<% for(let product of products) { %>
 								<% if(product.category.isActive === true) { %> 
 									<% if(product.isActive === true) { %>  
@@ -131,7 +91,7 @@
 							<% } %> 
 							<% } %>
 							<% } %> 
-							<% } %>  
+							
 					</div>
 				</section>
 
