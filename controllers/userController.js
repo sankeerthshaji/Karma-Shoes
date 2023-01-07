@@ -209,7 +209,7 @@ module.exports = {
           ]);
           count = count[0].products;
         } else {
-          count=0;
+          count = 0;
         }
       }
       res.render("user/detailPage", { user, product, count, categories });
@@ -594,45 +594,18 @@ module.exports = {
     try {
       const { category } = req.query;
       if (category) {
-        const catId = req.query.category;
+        const categoryId = req.query.category;
         const category = await Category.findById(
-          mongoose.Types.ObjectId(catId)
+          mongoose.Types.ObjectId(categoryId),
+          { isActive: true }
         );
-        // const products = await Product.find({ category }).populate("category");
-        // console.log(products);
-        var perPage = 6;
-        var pageNum = 1;
-        var docCount = await Product.countDocuments({ category });
-        console.log(docCount);
-        var products = await Product.find({ category }).populate("category");
-        console.log(products);
-        var pages = Math.ceil(docCount / perPage);
-        console.log(pages);
-        const categories = await Category.find({ isActive: true });
-        let userId = req.session.user;
-        var count = 0;
-        if (req.session.user) {
-          var count = 0;
-          let cart = await Cart.findOne({ userId });
-          if (cart) {
-            var count = await Cart.aggregate([
-              { $match: { userId: mongoose.Types.ObjectId(userId) } },
-              { $project: { products: { $size: "$products" } } },
-            ]);
-            count = count[0].products;
-            console.log(count);
-          } else {
-            console.log(count);
-          }
-        }
-        res.render("user/shopByCategory", {
-          user,
-          products,
-          categories,
-          category,
-          count,
-          pages,
-        });
+
+        var products = await Product.find({
+          $and: [{ isActive: "true" }, { category }],
+        }).populate("category");
+
+        res.json({category:true,products})
+
       }
     } catch (err) {
       console.error(err);
@@ -1578,9 +1551,15 @@ module.exports = {
       } else {
         count = 0;
       }
-      var userDetails = await User.findById(userId)
+      var userDetails = await User.findById(userId);
     }
-    res.render("user/add-image", { count, user, userId, categories , userDetails });
+    res.render("user/add-image", {
+      count,
+      user,
+      userId,
+      categories,
+      userDetails,
+    });
   },
 
   updateProfile: async (req, res) => {
