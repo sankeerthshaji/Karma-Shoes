@@ -26,8 +26,8 @@
 							class="lnr lnr-arrow-right"></span>All</a></li>
 						<% for(let category of categories) { %>  
 							<% if(category.isActive === true) { %> 
-						<li class="main-nav-list"><a href="/category?category=<%=category._id%>"><span
-								 class="lnr lnr-arrow-right"></span><%= category.name %></a>
+						<li class="main-nav-list"><a id="category-link" href="javascript:filterProducts('<%=category._id%>','?category=<%=category._id%>')"><span
+							class="lnr lnr-arrow-right"></span><%= category.name %></a>
 						</li>
 						<% } %> 
 						<% } %> 
@@ -154,6 +154,16 @@
 	</div>
 
 	<script>
+
+function filterProducts(categoryId, query) {
+  console.log(query);
+  $.ajax({
+    url: '/category' + query,
+    success: function(response) {
+      // code to handle the response goes here
+    }
+  });
+}
 
 function addToCart(productId){
     console.log(productId);

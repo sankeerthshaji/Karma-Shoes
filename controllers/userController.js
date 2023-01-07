@@ -598,7 +598,6 @@ module.exports = {
         const category = await Category.findById(
           mongoose.Types.ObjectId(catId)
         );
-        let user = req.session.user;
         // const products = await Product.find({ category }).populate("category");
         // console.log(products);
         var perPage = 6;
