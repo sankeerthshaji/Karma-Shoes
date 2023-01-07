@@ -636,7 +636,7 @@ module.exports = {
     if (req.query.searchProduct) {
       const { searchProduct } = req.query;
       console.log(searchProduct);
-      const searchResults = await Product.find({
+      const searchResults = await Product.find({                 
         $and: [
           { isActive: "true" },
           {
