@@ -19,7 +19,7 @@
                 class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                 id="menu"
               >
-                <li class="nav-item">
+                <li>
                   <a href="/admin/adminDashboard" class="nav-link align-middle px-0">
                     <img
                       src="/img/admin/dashboard.svg"
@@ -67,7 +67,7 @@
                   >
                 </li>
                 <li>
-                    <a href="/admin/addcategory" class="nav-link px-0 align-middle">
+                    <a href="/admin/addCategory" class="nav-link px-0 align-middle">
                       <img
                         src="/img/admin/add category.svg"
                         alt=""
@@ -173,5 +173,14 @@
           </div>
         </div>
       </div>
-
+      <script>
+        const menuLinks = document.querySelectorAll("#menu a.nav-link");
+        const currentUrl = window.location.pathname;
+    
+        menuLinks.forEach((link) => {
+          if (link.getAttribute("href") === currentUrl) {
+            link.setAttribute("style", "color: white; text-decoration: none;");
+          }
+        });
+      </script>
 </body>

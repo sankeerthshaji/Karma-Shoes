@@ -1,168 +1,219 @@
 <%- include('../partials/adminPartials/adminPartial.ejs') %>
 <body>
-    <div class="container-fluid">
-        <div class="row flex-nowrap">
-          <div
-            class="col-auto col-md-3 col-xl-2 px-sm-2 px-0"
-            style="background-color: #343a40"
+  <div class="container-fluid">
+    <div class="row flex-nowrap">
+      <div
+        class="col-auto col-md-3 col-xl-2 px-sm-2 px-0"
+        style="background-color: #343a40"
+      >
+        <div
+          class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100"
+        >
+          <a
+            href="/admin/"
+            class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none"
           >
-            <div
-              class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100"
-            >
+            <span class="fs-5 d-none d-sm-inline">Admin</span>
+          </a>
+          <ul
+            class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+            id="menu"
+          >
+            <li>
               <a
-                href="/admin/"
-                class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+                href="/admin/adminDashboard"
+                class="nav-link align-middle px-0"
               >
-                <span class="fs-5 d-none d-sm-inline">Admin</span>
+                <img
+                  src="/img/admin/dashboard.svg"
+                  alt=""
+                  style="width: 1rem"
+                /><span class="ms-1 d-none d-sm-inline">Dashboard</span>
               </a>
-              <ul
-                class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
-                id="menu"
+            </li>
+            <li>
+              <a href="/admin/orders" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/orders.svg"
+                  alt=""
+                  style="width: 1rem"
+                /><span class="ms-1 d-none d-sm-inline">Orders</span></a
               >
-                <li class="nav-item">
-                  <a href="/admin/adminDashboard" class="nav-link align-middle px-0">
-                    <img
-                      src="/img/admin/dashboard.svg"
-                      alt=""
-                      style="width: 1rem"
-                    /><span class="ms-1 d-none d-sm-inline">Dashboard</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/admin/orders" class="nav-link px-0 align-middle">
-                    <img
-                      src="/img/admin/orders.svg"
-                      alt=""
-                      style="width: 1rem"
-                    /><span class="ms-1 d-none d-sm-inline">Orders</span></a
-                  >
-                </li>
-                <li>
-                  <a href="/admin/products" class="nav-link px-0 align-middle">
-                    <img
-                      src="/img/admin/products.svg"
-                      alt=""
-                      style="width: 1rem"
-                    /><span class="ms-1 d-none d-sm-inline">Products</span></a
-                  >
-                </li>
-                <li>
-                  <a href="/admin/addProducts" class="nav-link px-0 align-middle">
-                    <img
-                      src="/img/admin/add products.svg"
-                      alt=""
-                      style="width: 1rem"
-                    />
-                    <span class="ms-1 d-none d-sm-inline">Add Products</span></a
-                  >
-                </li>
-                <li>
-                  <a href="/admin/Categories" class="nav-link px-0 align-middle">
-                    <img
-                      src="/img/admin/category.svg"
-                      alt=""
-                      style="width: 1rem"
-                    />
-                    <span class="ms-1 d-none d-sm-inline">Categories</span></a
-                  >
-                </li>
-                <li>
-                    <a href="/admin/addcategory" class="nav-link px-0 align-middle">
-                      <img
-                        src="/img/admin/add category.svg"
-                        alt=""
-                        style="width: 1rem"
-                      />
-                      <span class="ms-1 d-none d-sm-inline">Add Category</span></a
-                    >
-                  </li>
-                  <li>
-                    <a href="/admin/coupons" class="nav-link px-0 align-middle">
-                      <img
-                        src="/img/admin/coupon.svg"
-                        alt=""
-                        style="width: 1rem"
-                      />
-                      <span class="ms-1 d-none d-sm-inline">Coupons</span></a
-                    >
-                  </li>
-                  <li>
-                    <a href="/admin/addCoupon" class="nav-link px-0 align-middle">
-                      <img
-                        src="/img/admin/addCoupon.svg"
-                        alt=""
-                        style="width: 1rem"
-                      />
-                      <span class="ms-1 d-none d-sm-inline">Add Coupon</span></a
-                    >
-                  </li>
-                <li>
-                  <a href="/admin/userDetails" class="nav-link px-0 align-middle">
-                    <img src="/img/admin/users.svg" alt="" style="width: 1rem" />
-                    <span class="ms-1 d-none d-sm-inline">Users</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/admin/logout" class="nav-link px-0 align-middle">
-                    <img src="/img/admin/exit.svg" alt="" style="width: 1rem" />
-                    <span class="ms-1 d-none d-sm-inline">Logout</span>
-                  </a>
-                </li>
-              </ul>
-              <hr />
-            </div>
-          </div>
-          <div class="col py-3 table-responsive">
-            <h1>Category Details</h1>
-            <table class="table table-bordered table-hover align-middle mb-0" id="table">
-              <thead class="thead-dark">
-                  <tr>
-                    <th class="col-3 col-md-3 col-lg-3 col-xl-1 text-center" scope="col">Sl.No</th>
-                    <th class="col-3 col-md-3 col-lg-3 col-xl-1 text-center" scope="col">Category</th>
-                    <th class="col-3 col-md-3 col-lg-3 col-xl-1 text-center" scope="col">Edit</th>
-                    <th class="col-3 col-md-3 col-lg-3 col-xl-1 text-center" scope="col">Options</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    <% categories.forEach((category,index)=>{  %> 
-                  <tr>
-                    <th class="col-3 col-md-3 col-lg-3 col-xl-1 text-center" scope="row"><%=index+1%></th>
-                    <td class="col-3 col-md-3 col-lg-3 col-xl-1 text-center"><%= category.name %> </td>
-                    <td class="col-3 col-md-3 col-lg-3 col-xl-1 text-center"><a href="/admin/editCategory/<%=category._id%>"><button type="button" class="btn btn-primary">Edit</button></a></td>
-                      <td class="col-3 col-md-3 col-lg-3 col-xl-2 text-center">
-                        <% if(category.isActive === true) { %> 
-                          <a href="/admin/isActiveCategory/<%=category._id%>">
-                          <button
-                            type="submit"
-                            class="btn btn-danger"
-                            onclick="return confirm('Are you sure you want to Unlist <%= category.name %>')"
-                          >
-                            Unlist
-                          </button>
-                        </a>
-                          <% }else{ %> 
-                            <a href="/admin/isInactiveCategory/<%=category._id%>">
-                              <button
-                                type="submit"
-                                class="btn btn-success"
-                                onclick="return confirm('Are you sure you want to List <%= category.name %>')"
-                              >
-                                List
-                              </button>
-                            </a>
-                            <% } %> 
-                      </td>
-                  </tr>
-                  <% }) %> 
-                </tbody>
-              </table>
-          </div>
+            </li>
+            <!-- <li>
+              <a href="/admin/salesReport" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/salesReport.svg"
+                  alt=""
+                  style="width: 1rem"
+                /><span class="ms-1 d-none d-sm-inline">Sales Report</span></a
+              >
+            </li> -->
+            <li>
+              <a href="/admin/products" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/products.svg"
+                  alt=""
+                  style="width: 1rem"
+                /><span class="ms-1 d-none d-sm-inline">Products</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/addProducts" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/add products.svg"
+                  alt=""
+                  style="width: 1rem"
+                />
+                <span class="ms-1 d-none d-sm-inline">Add Products</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/categories" class="nav-link px-0 align-middle">
+                <img src="/img/admin/category.svg" alt="" style="width: 1rem" />
+                <span class="ms-1 d-none d-sm-inline">Categories</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/addCategory" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/add category.svg"
+                  alt=""
+                  style="width: 1rem"
+                />
+                <span class="ms-1 d-none d-sm-inline">Add Category</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/coupons" class="nav-link px-0 align-middle">
+                <img src="/img/admin/coupon.svg" alt="" style="width: 1rem" />
+                <span class="ms-1 d-none d-sm-inline">Coupons</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/addCoupon" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/addCoupon.svg"
+                  alt=""
+                  style="width: 1rem"
+                />
+                <span class="ms-1 d-none d-sm-inline">Add Coupon</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/userDetails" class="nav-link px-0 align-middle">
+                <img src="/img/admin/users.svg" alt="" style="width: 1rem" />
+                <span class="ms-1 d-none d-sm-inline">Users</span>
+              </a>
+            </li>
+            <li>
+              <a href="/admin/logout" class="nav-link px-0 align-middle">
+                <img src="/img/admin/exit.svg" alt="" style="width: 1rem" />
+                <span class="ms-1 d-none d-sm-inline">Logout</span>
+              </a>
+            </li>
+          </ul>
+          <hr />
         </div>
       </div>
+      <div class="col py-3 table-responsive">
+        <h1>Category Details</h1>
+        <table
+          class="table table-bordered table-hover align-middle mb-0"
+          id="table"
+        >
+          <thead class="thead-dark">
+            <tr>
+              <th
+                class="col-3 col-md-3 col-lg-3 col-xl-1 text-center"
+                scope="col"
+              >
+                Sl.No
+              </th>
+              <th
+                class="col-3 col-md-3 col-lg-3 col-xl-1 text-center"
+                scope="col"
+              >
+                Category
+              </th>
+              <th
+                class="col-3 col-md-3 col-lg-3 col-xl-1 text-center"
+                scope="col"
+              >
+                Edit
+              </th>
+              <th
+                class="col-3 col-md-3 col-lg-3 col-xl-1 text-center"
+                scope="col"
+              >
+                Options
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <% categories.forEach((category,index)=>{ %>
+            <tr>
+              <th
+                class="col-3 col-md-3 col-lg-3 col-xl-1 text-center"
+                scope="row"
+              >
+                <%=index+1%>
+              </th>
+              <td class="col-3 col-md-3 col-lg-3 col-xl-1 text-center">
+                <%= category.name %>
+              </td>
+              <td class="col-3 col-md-3 col-lg-3 col-xl-1 text-center">
+                <a href="/admin/editCategory/<%=category._id%>"
+                  ><button type="button" class="btn btn-primary">
+                    Edit
+                  </button></a
+                >
+              </td>
+              <td class="col-3 col-md-3 col-lg-3 col-xl-2 text-center">
+                <% if(category.isActive === true) { %>
+                <a href="/admin/isActiveCategory/<%=category._id%>">
+                  <button
+                    type="submit"
+                    class="btn btn-danger"
+                    onclick="return confirm('Are you sure you want to Unlist <%= category.name %>')"
+                  >
+                    Unlist
+                  </button>
+                </a>
+                <% }else{ %>
+                <a href="/admin/isInactiveCategory/<%=category._id%>">
+                  <button
+                    type="submit"
+                    class="btn btn-success"
+                    onclick="return confirm('Are you sure you want to List <%= category.name %>')"
+                  >
+                    List
+                  </button>
+                </a>
+                <% } %>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
-      <script>
-        $(document).ready(function () {
-          $("#table").DataTable();
-        });
-      </script>
+  <script>
+    $(document).ready(function () {
+      $("#table").DataTable();
+    });
+  </script>
+
+<script>
+  const menuLinks = document.querySelectorAll("#menu a.nav-link");
+  const currentUrl = window.location.pathname;
+
+  menuLinks.forEach((link) => {
+    if (link.getAttribute("href") === currentUrl) {
+      link.setAttribute("style", "color: white; text-decoration: none;");
+    }
+  });
+</script>
 </body>

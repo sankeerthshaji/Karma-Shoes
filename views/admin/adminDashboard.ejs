@@ -19,7 +19,7 @@
             class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
             id="menu"
           >
-            <li class="nav-item">
+            <li>
               <a
                 href="/admin/adminDashboard"
                 class="nav-link align-middle px-0"
@@ -40,7 +40,7 @@
                 /><span class="ms-1 d-none d-sm-inline">Orders</span></a
               >
             </li>
-            <li>
+            <!-- <li>
               <a href="/admin/salesReport" class="nav-link px-0 align-middle">
                 <img
                   src="/img/admin/salesReport.svg"
@@ -48,7 +48,7 @@
                   style="width: 1rem"
                 /><span class="ms-1 d-none d-sm-inline">Sales Report</span></a
               >
-            </li>
+            </li> -->
             <li>
               <a href="/admin/products" class="nav-link px-0 align-middle">
                 <img
@@ -75,7 +75,7 @@
               >
             </li>
             <li>
-              <a href="/admin/addcategory" class="nav-link px-0 align-middle">
+              <a href="/admin/addCategory" class="nav-link px-0 align-middle">
                 <img
                   src="/img/admin/add category.svg"
                   alt=""
@@ -207,7 +207,7 @@
             <div class="col-md-3">
               <div class="card-counter info">
                 <i class="fa fa-money" aria-hidden="true"></i>
-                
+
                 <span class="count-numbers"><%= totalIncome %></span>
                 <span class="count-name">Total revenue</span>
               </div>
@@ -222,63 +222,83 @@
           <div class="col-md-4 mt-5 gbg" style="border-radius: 5px">
             <canvas id="Paystatus" class=""> </canvas>
           </div>
-        
-        <input type="hidden" id="pending" value="<%= Pending %>" />
-        <input type="hidden" id="shipped" value="<%= Shipped %>" />
-        <input type="hidden" id="delivered" value="<%= Delivered %>" />
-        <input type="hidden" id="cancelled" value="<%= Cancelled %>" />
-        <input type="hidden" id="cod" value="<%= COD %>" />
-        <input type="hidden" id="online" value="<%= Online %>" />
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script>
-          const ctx = document.getElementById("ordersStatusChart");
-          const ctx1 = document.getElementById("Paystatus");
-          const pending = Number(document.getElementById("pending").value);
-          const shipped = Number(document.getElementById("shipped").value);
-          const delivered = Number(document.getElementById("delivered").value);
-          const cancelled = Number(document.getElementById("cancelled").value);
-          const cod = Number(document.getElementById("cod").value);
-          const online = Number(document.getElementById("online").value);
 
-          new Chart(ctx, {
-            type: "bar",
-            data: {
-              labels: ["Pending", "Shipped", "Delivered", "Cancelled"],
-              datasets: [
-                {
-                  label: "Order Status",
-                  data: [pending, shipped, delivered, cancelled],
-                  borderWidth: 2,
-                  backgroundColor: ["#f0ad4e", "#0275d8", "#5cb85c", "#d9534f"],
-                },
-              ],
-            },
-            options: {
-              scales: {
-                y: {
-                  beginAtZero: true,
+          <input type="hidden" id="pending" value="<%= Pending %>" />
+          <input type="hidden" id="shipped" value="<%= Shipped %>" />
+          <input type="hidden" id="delivered" value="<%= Delivered %>" />
+          <input type="hidden" id="cancelled" value="<%= Cancelled %>" />
+          <input type="hidden" id="cod" value="<%= COD %>" />
+          <input type="hidden" id="online" value="<%= Online %>" />
+          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+          <script>
+            const ctx = document.getElementById("ordersStatusChart");
+            const ctx1 = document.getElementById("Paystatus");
+            const pending = Number(document.getElementById("pending").value);
+            const shipped = Number(document.getElementById("shipped").value);
+            const delivered = Number(
+              document.getElementById("delivered").value
+            );
+            const cancelled = Number(
+              document.getElementById("cancelled").value
+            );
+            const cod = Number(document.getElementById("cod").value);
+            const online = Number(document.getElementById("online").value);
+
+            new Chart(ctx, {
+              type: "bar",
+              data: {
+                labels: ["Pending", "Shipped", "Delivered", "Cancelled"],
+                datasets: [
+                  {
+                    label: "Order Status",
+                    data: [pending, shipped, delivered, cancelled],
+                    borderWidth: 2,
+                    backgroundColor: [
+                      "#f0ad4e",
+                      "#0275d8",
+                      "#5cb85c",
+                      "#d9534f",
+                    ],
+                  },
+                ],
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                  },
                 },
               },
-            },
-          });
-          new Chart(ctx1, {
-            type: "pie",
-            data: {
-              labels: ["COD", "Online"],
-              datasets: [
-                {
-                  label: "Payment method",
-                  data: [cod, online],
-                  borderWidth: 2,
-                  backgroundColor: ["#5cb85c", "#0275d8"],
-                },
-              ],
-            },
-            options: {},
-          });
-        </script>
+            });
+            new Chart(ctx1, {
+              type: "pie",
+              data: {
+                labels: ["COD", "Online"],
+                datasets: [
+                  {
+                    label: "Payment method",
+                    data: [cod, online],
+                    borderWidth: 2,
+                    backgroundColor: ["#5cb85c", "#0275d8"],
+                  },
+                ],
+              },
+              options: {},
+            });
+          </script>
         </div>
       </div>
     </div>
-  </div>      
+  </div>
+  <script>
+    const menuLinks = document.querySelectorAll("#menu a.nav-link");
+    const currentUrl = window.location.pathname;
+
+    menuLinks.forEach((link) => {
+      if (link.getAttribute("href") === currentUrl) {
+        link.setAttribute("style", "color: white; text-decoration: none;");
+      }
+    });
+  </script>
+  
 </body>

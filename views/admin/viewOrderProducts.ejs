@@ -79,4 +79,26 @@
         </div>
       </div>
     </div>
+    <script>
+      const lis = document.querySelectorAll(".nav-item");
+  
+      for (const li of lis) {
+        li.addEventListener("click", function () {
+          for (const otherLi of lis) {
+            otherLi.removeAttribute("style");
+          }
+          li.setAttribute("style", "background-color: yellow;");
+          sessionStorage.setItem("selectedListItem", li.innerHTML);
+        });
+      }
+  
+      const selectedListItem = sessionStorage.getItem("selectedListItem");
+      if (selectedListItem) {
+        for (const li of lis) {
+          if (li.innerHTML === selectedListItem) {
+            li.setAttribute("style", "background-color: yellow;");
+          }
+        }
+      }
+    </script>
   </section>
