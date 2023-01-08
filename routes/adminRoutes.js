@@ -39,5 +39,8 @@ router.put('/coupons/:id',session.verifyLoginAdmin,adminController.updateCoupon)
 router.get('/isActiveCoupon/:id',session.verifyLoginAdmin,adminController.isActiveCoupon)
 router.get('/isInactiveCoupon/:id',session.verifyLoginAdmin,adminController.isInactiveCoupon)
 router.get('/adminDashboard',session.verifyLoginAdmin,adminController.getAdminDashboard);
+router.get('/salesReport',session.verifyLoginAdmin,adminController.getSalesReport)
+router.get('/dailySales',session.verifyLoginAdmin,adminController.getDailySales)
+router.get('/monthlySales',session.verifyLoginAdmin,adminController.getMonthlySales)
 
 module.exports = router;

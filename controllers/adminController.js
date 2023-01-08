@@ -6,6 +6,7 @@ const router = require("../routes/userRoutes");
 const Order = require("../models/order");
 const mongoose = require("mongoose");
 const Coupon = require("../models/coupon");
+const moment = require("moment");
 const { findByIdAndUpdate } = require("../models/cart");
 
 module.exports = {
@@ -370,12 +371,12 @@ module.exports = {
         },
       },
     ]);
-    if(totalIncome.length==0){
-      totalIncome=0
-    }else{
+    if (totalIncome.length == 0) {
+      totalIncome = 0;
+    } else {
       totalIncome = totalIncome[0].total;
     }
-    
+
     const Pending = await Order.find({ order_status: "Pending" }).count();
     const Shipped = await Order.find({ order_status: "Shipped" }).count();
     const Delivered = await Order.find({ order_status: "Delivered" }).count();
@@ -394,6 +395,44 @@ module.exports = {
       COD,
       Online,
     });
+  },
+
+  getSalesReport: async (req, res) => {
+    const totalSales = await Order.find({ order_status: "Delivered" });
+    console.log(totalSales);
+    res.render("admin/salesReport", { totalSales });
+  },
+
+  getDailySales: async (req, res) => {
+    const currentDate = moment();
+    const startOfDay = moment(currentDate).startOf("day");
+    const endOfDay = moment(currentDate).endOf("day");
+
+    const dailySales = await Order.find({
+      order_status: "Delivered",
+      createdAt: {
+        $gte: startOfDay,
+        $lt: endOfDay,
+      },
+    });
+    console.log(dailySales);
+    res.render("admin/dailySales", { dailySales });
+  },
+
+  getMonthlySales: async (req, res) => {
+    const currentDate = moment();
+    const startOfMonth = moment(currentDate).startOf("month");
+    const endOfMonth = moment(currentDate).endOf("month");
+
+    const monthlySales = await Order.find({
+      order_status: "Delivered",
+      createdAt: {
+        $gte: startOfMonth,
+        $lt: endOfMonth,
+      },
+    });
+    console.log(monthlySales);
+    res.render("admin/monthlySales", { monthlySales });
   },
 
   getAdminLogout: (req, res) => {

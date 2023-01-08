@@ -1,0 +1,317 @@
+<%- include('../partials/adminPartials/adminPartial.ejs') %>
+<body>
+  <div class="container-fluid">
+    <div class="row flex-nowrap">
+      <div
+        class="col-auto col-md-3 col-xl-2 px-sm-2 px-0"
+        style="background-color: #343a40"
+      >
+        <div
+          class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100"
+        >
+          <a
+            href="/admin/"
+            class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+          >
+            <span class="fs-5 d-none d-sm-inline">Admin</span>
+          </a>
+          <ul
+            class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+            id="menu"
+          >
+            <li>
+              <a
+                href="/admin/adminDashboard"
+                class="nav-link align-middle px-0"
+              >
+                <img
+                  src="/img/admin/dashboard.svg"
+                  alt=""
+                  style="width: 1rem"
+                /><span class="ms-1 d-none d-sm-inline">Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a href="/admin/orders" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/orders.svg"
+                  alt=""
+                  style="width: 1rem"
+                /><span class="ms-1 d-none d-sm-inline">Orders</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/salesReport" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/salesReport.svg"
+                  alt=""
+                  style="width: 1rem"
+                /><span class="ms-1 d-none d-sm-inline">Sales Report</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/products" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/products.svg"
+                  alt=""
+                  style="width: 1rem"
+                /><span class="ms-1 d-none d-sm-inline">Products</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/addProducts" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/add products.svg"
+                  alt=""
+                  style="width: 1rem"
+                />
+                <span class="ms-1 d-none d-sm-inline">Add Products</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/categories" class="nav-link px-0 align-middle">
+                <img src="/img/admin/category.svg" alt="" style="width: 1rem" />
+                <span class="ms-1 d-none d-sm-inline">Categories</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/addCategory" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/add category.svg"
+                  alt=""
+                  style="width: 1rem"
+                />
+                <span class="ms-1 d-none d-sm-inline">Add Category</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/coupons" class="nav-link px-0 align-middle">
+                <img src="/img/admin/coupon.svg" alt="" style="width: 1rem" />
+                <span class="ms-1 d-none d-sm-inline">Coupons</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/addCoupon" class="nav-link px-0 align-middle">
+                <img
+                  src="/img/admin/addCoupon.svg"
+                  alt=""
+                  style="width: 1rem"
+                />
+                <span class="ms-1 d-none d-sm-inline">Add Coupon</span></a
+              >
+            </li>
+            <li>
+              <a href="/admin/userDetails" class="nav-link px-0 align-middle">
+                <img src="/img/admin/users.svg" alt="" style="width: 1rem" />
+                <span class="ms-1 d-none d-sm-inline">Users</span>
+              </a>
+            </li>
+            <li>
+              <a href="/admin/logout" class="nav-link px-0 align-middle">
+                <img src="/img/admin/exit.svg" alt="" style="width: 1rem" />
+                <span class="ms-1 d-none d-sm-inline">Logout</span>
+              </a>
+            </li>
+          </ul>
+          <hr />
+        </div>
+      </div>
+      <div class="col py-3">
+        <style>
+          /* Add some styling to make the page look nicer */
+          body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+          }
+          a {
+            text-decoration: none;
+            color: #fff;
+          }
+          a:hover {
+            text-decoration: none;
+            color: #fff;
+          }
+          .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+          }
+          h1 {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 32px;
+            color: #333;
+          }
+          .buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+          }
+          .button {
+            display: inline-block;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            color: #fff;
+            cursor: pointer;
+          }
+          .button:hover {
+            /* Add a hover effect to the buttons */
+            background-color: #ccc;
+          }
+          .button.total-sales {
+            background-color: #4caf50;
+          }
+          .button.monthly-sales {
+            background-color: #2196f3;
+          }
+          .button.daily-sales {
+            background-color: #f44336;
+          }
+          .button.download {
+            background-color: #9e9e9e;
+          }
+          /* Add a spinner to show while data is loading */
+          .spinner {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 50px;
+            color: #ccc;
+          }
+          .spinner.visible {
+            display: block;
+          }
+        </style>
+
+        <div class="container">
+          <h1>Sales Report</h1>
+          <div class="buttons">
+            <button class="button total-sales" id="total-sales-button">
+              <a href="/admin/salesReport">Total Sales</a>
+            </button>
+            <button class="button monthly-sales" id="monthly-sales-button">
+              <a href="/admin/monthlySales"> Monthly Sales </a>
+            </button>
+            <button class="button daily-sales" id="daily-sales-button">
+              <a href="/admin/dailySales"> Daily Sales </a>
+            </button>
+            <button class="button download" id="download-button">
+              Download as PDF
+            </button>
+          </div>
+          <div id="sales-report">
+            <!-- This div will be used to display the sales data -->
+            <table
+              class="table table-bordered table-hover align-middle mb-0"
+              id="table"
+            >
+              <thead class="thead-dark">
+                <tr>
+                  <th
+                    class="col-3 col-md-3 col-lg-3 col-xl-1 text-center"
+                    scope="col"
+                  >
+                    Invoice
+                  </th>
+                  <th
+                    class="col-3 col-md-3 col-lg-3 col-xl-1 text-center"
+                    scope="col"
+                  >
+                    Customer
+                  </th>
+                  <th
+                    class="col-3 col-md-3 col-lg-3 col-xl-1 text-center"
+                    scope="col"
+                  >
+                    Amount
+                  </th>
+                  <th
+                    class="col-3 col-md-3 col-lg-3 col-xl-1 text-center"
+                    scope="col"
+                  >
+                    Payment Status
+                  </th>
+                  <th
+                    class="col-3 col-md-3 col-lg-3 col-xl-1 text-center"
+                    scope="col"
+                  >
+                    Order Status
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <% for(let dailySale of dailySales) { %>
+                <tr>
+                  <th
+                    class="col-3 col-md-3 col-lg-3 col-xl-1 text-center"
+                    scope="row"
+                  >
+                    <%= dailySale._id %>
+                  </th>
+                  <td class="col-3 col-md-3 col-lg-3 col-xl-1 text-center">
+                    <%= dailySale.username %>
+                  </td>
+                  <td class="col-3 col-md-3 col-lg-3 col-xl-1 text-center">
+                    <%= dailySale.total %>
+                  </td>
+                  <td class="col-3 col-md-3 col-lg-3 col-xl-1 text-center">
+                    <%= dailySale.payment_status %>
+                  </td>
+                  <td class="col-3 col-md-3 col-lg-3 col-xl-1 text-center">
+                    <%= dailySale.order_status %>
+                  </td>
+                </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+          <div class="spinner" id="spinner">
+            <!-- This div will be used to display a spinner while data is loading -->
+            <i class="fa fa-spinner fa-spin"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const menuLinks = document.querySelectorAll("#menu a.nav-link");
+    const currentUrl = window.location.pathname;
+
+    menuLinks.forEach((link) => {
+      if (link.getAttribute("href") === currentUrl) {
+        link.setAttribute("style", "color: white; text-decoration: none;");
+      }
+    });
+  </script>
+  <script>
+    window.jsPDF = window.jspdf.jsPDF;
+    const downloadButton = document.getElementById("download-button");
+
+    downloadButton.addEventListener("click", () => {
+      // Take a screenshot of the sales report
+      html2canvas(document.querySelector("#sales-report")).then((canvas) => {
+        // Convert the screenshot to a PDF
+        const pdf = new jsPDF("l", "mm", "a4");
+        var imgWidth = 260;
+        var imgHeight = (canvas.height * imgWidth) / canvas.width;
+        pdf.addImage(
+          canvas.toDataURL("image/png"),
+          "JPEG",
+          15,
+          10,
+          imgWidth,
+          imgHeight
+        );
+
+        // Prompt the user to save the PDF
+        pdf.save("sales-report.pdf");
+      });
+    });
+  </script>
+</body>
