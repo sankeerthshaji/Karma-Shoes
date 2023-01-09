@@ -11,7 +11,7 @@
         <nav class="d-flex align-items-center">
           <a href="/app.js">Home<span class="lnr lnr-arrow-right"></span></a>
           <a href="#">Shop<span class="lnr lnr-arrow-right"></span></a>
-          <a href="/shop">Fashion Category</a>
+          <a href="/shop">Shop By Category</a>
         </nav>
       </div>
     </div>
@@ -29,8 +29,8 @@
           </li>
           <% for(let category of categories) { %> <% if(category.isActive ===
           true) { %>
-          <li class="main-nav-list">
-            <a href="/category?category=<%=category._id%>"
+          <li class="main-nav-list category-item">
+            <a href="/category?category=<%=category._id%>" class="category-link" id="<%=category._id%>"
               ><span class="lnr lnr-arrow-right"></span><%= category.name %></a>
           </li>
           <% } %> <% } %>
@@ -121,6 +121,47 @@
     </div>
   </div>
 </div>
+
+
+<script>
+  let currentCategoryId = null;
+  let currentCategoryColor = null;
+
+  const menuLinks = document.querySelectorAll(".category-link");
+  console.log(menuLinks);
+
+  function updateColor(id, color) {
+    localStorage.setItem(id, color);
+  }
+
+  function removeColor(id) {
+    localStorage.removeItem(id);
+  }
+
+  menuLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (currentCategoryId) {
+        removeColor(currentCategoryId);
+        document.getElementById(currentCategoryId).setAttribute("style", "");
+      }
+      link.setAttribute("style", "color: white; text-decoration: none;");
+      updateColor(link.getAttribute("id"), "#ffc107");
+      currentCategoryId = link.getAttribute("id");
+      currentCategoryColor = "#ffc107";
+      window.location = link.getAttribute("href");
+    });
+  });
+
+  menuLinks.forEach((link) => {
+    const storedColor = localStorage.getItem(link.getAttribute("id"));
+    if (storedColor) {
+      link.setAttribute("style", `color: ${storedColor}; text-decoration: none;`);
+      currentCategoryId = link.getAttribute("id");
+      currentCategoryColor = storedColor;
+    }
+  });
+</script>
 
 <script>
 

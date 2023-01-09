@@ -16,17 +16,22 @@
 		</div>
 	</section>
 	<!-- End Banner Area -->
+	<style>
+		.highlight {
+		  background-color: #eee;
+		}
+	  </style>
 	<div class="container">
 		<div class="row">
 			<div class="col-xl-3 col-lg-4 col-md-5">
 				<div class="sidebar-categories">
 					<div class="head">Browse Categories</div>
 					<ul class="main-categories">
-						<li class="main-nav-list"><a href="/shop"><span
+						<li class="main-nav-list"><a href="/shop" class="allCategories"><span
 							class="lnr lnr-arrow-right"></span>All</a></li>
 						<% for(let category of categories) { %>  
 							<% if(category.isActive === true) { %> 
-						<li class="main-nav-list"><a id="category-link" href="/category?category=<%=category._id%>"><span
+						<li class="main-nav-list category-item"><a id="category-link" href="/category?category=<%=category._id%>"><span
 							class="lnr lnr-arrow-right"></span><%= category.name %></a>
 						</li>
 						<% } %> 
@@ -113,6 +118,45 @@
 		</div>
 	</div>
 
+	<script>
+		let currentCategoryId = null;
+		let currentCategoryColor = null;
+	  
+		const menuLinks = document.querySelectorAll(".allCategories");
+		console.log(menuLinks);
+	  
+		function updateColor(id, color) {
+		  localStorage.setItem(id, color);
+		}
+	  
+		function removeColor(id) {
+		  localStorage.removeItem(id);
+		}
+	  
+		menuLinks.forEach((link) => {
+		  link.addEventListener("click", (event) => {
+			event.preventDefault();
+			if (currentCategoryId) {
+			  removeColor(currentCategoryId);
+			  document.getElementById(currentCategoryId).setAttribute("style", "");
+			}
+			link.setAttribute("style", "color: white; text-decoration: none;");
+			updateColor(link.getAttribute("id"), "#ffc107");
+			currentCategoryId = link.getAttribute("id");
+			currentCategoryColor = "#ffc107";
+			window.location = link.getAttribute("href");
+		  });
+		});
+	  
+		menuLinks.forEach((link) => {
+		  const storedColor = localStorage.getItem(link.getAttribute("id"));
+		  if (storedColor) {
+			link.setAttribute("style", `color: ${storedColor}; text-decoration: none;`);
+			currentCategoryId = link.getAttribute("id");
+			currentCategoryColor = storedColor;
+		  }
+		});
+	  </script>
 	<script>
 
 function addToCart(productId){

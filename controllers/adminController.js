@@ -407,7 +407,6 @@ module.exports = {
     const currentDate = moment();
     const startOfDay = moment(currentDate).startOf("day");
     const endOfDay = moment(currentDate).endOf("day");
-
     const dailySales = await Order.find({
       order_status: "Delivered",
       createdAt: {
