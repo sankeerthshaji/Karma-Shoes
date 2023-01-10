@@ -53,26 +53,41 @@
   
               <div class="d-flex justify-content-between pt-2">
                 <p class="fw-bold mb-0">Order Details</p>
-                <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span> Rs. <%=order[0].total%></p>
+                <p class="fw-bold mb-0">Payment Summary</p>
               </div>
   
               <div class="d-flex justify-content-between pt-2">
-                <p class="text-muted mb-0">Invoice Number : 788152</p>
-                <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span> $19.00</p>
+                <p class="text-muted mb-0">Order ID : <%=order[0]._id%></p>
+                <p class="text-muted mb-0">
+                  <span class="me-4">Total</span> Rs. <%=order[0].total%>
+                </p>
               </div>
   
               <div class="d-flex justify-content-between">
-                <p class="text-muted mb-0">Invoice Date : <%= order[0].orderDate %> </p>
-                <p class="text-muted mb-0"><span class="fw-bold me-4">Delivery Charges</span> Free</p>
+                <p class="text-muted mb-0">
+                  Order Date : <%= order[0].orderDate %>
+                </p>
+                <p class="text-muted mb-0">
+                  <span class="me-4">Delivery Charges</span> Free
+                </p>
               </div>
   
-              <div class="d-flex justify-content-between mb-5">
+              <div class="d-flex justify-content-between mb-5"></div>
+              <div
+                class="card-footer border-0 px-4 py-5"
+                style="
+                  background: linear-gradient(90deg, #ffba00 0%, #ff6c00 100%);
+                  border-bottom-left-radius: 10px;
+                  border-bottom-right-radius: 10px;
+                "
+              >
+                <h5
+                  class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0"
+                >
+                  Total paid:
+                  <span class="h2 mb-0 ms-2">Rs.<%= order[0].total%></span>
+                </h5>
               </div>
-              <div class="card-footer border-0 px-4 py-5"
-              style="background: linear-gradient(90deg, #ffba00 0%, #ff6c00 100%); border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
-              <h5 class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">Total
-                paid: <span class="h2 mb-0 ms-2">Rs.<%= order[0].total%></span></h5>
-            </div>
             </div>
            
           </div>
