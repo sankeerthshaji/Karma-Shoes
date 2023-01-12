@@ -1,7 +1,6 @@
 {
   "name": "ecommerce",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -34,5 +33,14 @@
     "nodemailer": "^6.8.0",
     "razorpay": "^2.8.4",
     "sweetalert": "^2.1.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sankeerthshaji/Karma-Shoes.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sankeerthshaji/Karma-Shoes/issues"
+  },
+  "homepage": "https://github.com/sankeerthshaji/Karma-Shoes#readme",
+  "description": ""
 }
