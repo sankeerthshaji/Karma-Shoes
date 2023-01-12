@@ -925,6 +925,7 @@ module.exports = {
   coupon: async (req, res) => {
     const details = req.body;
     const coupon = await Coupon.findOne({ couponCodeName: details.coupon });
+    console.log(coupon);
     if (coupon) {
       await Coupon.findOne({
         couponCodeName: details.coupon,
@@ -936,26 +937,30 @@ module.exports = {
           let todaysDate = new Date();
           let expiryDate = coupon.expiryDate;
           let expiryDateISO = new Date(expiryDate);
-          if (todaysDate.getTime() < expiryDateISO.getTime()) {
-            if (details.totalSum > coupon.minimumLimit) {
-              if (details.totalSum < coupon.maximumLimit) {
-                let discount = coupon.discountPrice;
-                discount = parseInt(discount);
-                const discountPercentage = discount / 100;
-                totalSum = Math.round(
-                  details.totalSum - details.totalSum * discountPercentage
-                );
-                // totalSum = details.totalSum - discountPrice;
-                console.log(totalSum);
-                res.json({ status: true, totalSum });
+          if (coupon.isActive === true) {
+            if (todaysDate.getTime() < expiryDateISO.getTime()) {
+              if (details.totalSum > coupon.minimumLimit) {
+                if (details.totalSum < coupon.maximumLimit) {
+                  let discount = coupon.discountPrice;
+                  discount = parseInt(discount);
+                  const discountPercentage = discount / 100;
+                  totalSum = Math.round(
+                    details.totalSum - details.totalSum * discountPercentage
+                  );
+                  // totalSum = details.totalSum - discountPrice;
+                  console.log(totalSum);
+                  res.json({ status: true, totalSum });
+                } else {
+                  res.json({ maximumLimit: true });
+                }
               } else {
-                res.json({ maximumLimit: true });
+                res.json({ minimumLimit: true });
               }
             } else {
-              res.json({ minimumLimit: true });
+              res.json({ couponExpired: true });
             }
           } else {
-            res.json({ couponExpired: true });
+            res.json({ status: false });
           }
         }
       });
