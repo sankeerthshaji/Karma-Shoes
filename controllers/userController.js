@@ -937,8 +937,8 @@ module.exports = {
           let todaysDate = new Date();
           let expiryDate = coupon.expiryDate;
           let expiryDateISO = new Date(expiryDate);
+          console.log(coupon.isActive);
           if (coupon.isActive === true) {
-            console.log(coupon);
             if (todaysDate.getTime() < expiryDateISO.getTime()) {
               if (details.totalSum > coupon.minimumLimit) {
                 if (details.totalSum < coupon.maximumLimit) {
