@@ -65,7 +65,7 @@
 						<!-- single product -->
 
 							<% for(let product of products) { %>
-								<% if(product.category.isActive === true) { %> 
+								<% if(product?.category?.isActive === true) { %> 
 									<% if(product.isActive === true) { %>  
 							<div class="col-lg-4 col-md-6">
 								<div class="single-product">

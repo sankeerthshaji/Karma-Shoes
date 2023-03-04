@@ -166,8 +166,8 @@
                     <label for="category">Category</label>
                     <select name="category" id="category" class="form-control">
                         <% for(let category of categories) { %> 
-                          <% if(category.isActive === true) { %>
-                        <option value="<%= category._id %>" <%= product.category.name === category.name ? 'selected' : '' %>><%= category.name %></option>
+                          <% if(category?.isActive === true) { %>
+                        <option value="<%= category._id %>" <%= product?.category?.name === category?.name ? 'selected' : '' %>><%= category?.name %></option>
                         <% } %> 
                         <% } %> 
                     </select>

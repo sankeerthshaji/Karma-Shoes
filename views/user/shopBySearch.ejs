@@ -61,7 +61,7 @@
                         
                         <!-- single product -->
 						<% for(let result of searchResults) { %>
-							<% if(result.category.isActive === true) { %> 
+							<% if(result?.category?.isActive === true) { %> 
 								<% if(result.isActive === true) { %>  
 						<div class="col-lg-4 col-md-6">
 							<div class="single-product">
