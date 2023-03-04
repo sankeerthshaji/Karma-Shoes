@@ -170,17 +170,19 @@ module.exports = {
   },
 
   postAddCategory: async (req, res) => {
-    const name = req.body;
-    const existingCategory = await Category.findOne(name);
+    console.log(req.body.name);
+    const name = req.body.name.trim();
+    const existingCategory = await Category.findOne({ name });
     if (existingCategory) {
       req.session.categoryErr = "Category already exists";
       res.redirect("/admin/addCategory");
     } else {
-      const newCategory = new Category(req.body);
+      const newCategory = new Category({ name });
       await newCategory.save();
       res.redirect("/admin/categories");
     }
   },
+  
 
   getEditCategory: async (req, res) => {
     try {
